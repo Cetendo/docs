@@ -69,6 +69,12 @@
       ]
     },
     {
+      "group": "Code Guidelines",
+      "pages": [
+        "code-guidelines/create-a-branch"
+      ]
+    },
+    {
       "group": "API Documentation",
       "pages": [
         "api-reference/introduction"
