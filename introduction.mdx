@@ -105,3 +105,599 @@ Tech Stack text
     <Note>Backend</Note>
   </Card>
 </CardGroup>
+
+
+
+
+
+
+
+## Git Guidelines
+<AccordionGroup>
+  <Accordion title="Create a Branch">
+    **Category**
+
+    A git branch should start with a category. You can pretty much use the following 4 categories for everything: `feat`, `fix`, `refactor`, `chore`, and `hotfix`.
+
+    - `feat` is for adding a new feature.
+    - `fix` is for fixing a bug.
+    - `refactor` is for changing code for performance or convenience purpose (e.g. readability).
+    - `chore` is for everything else (writing documentation, formatting, adding tests, cleaning useless code etc).
+    - `hotfix` is for quickly addressing issues in production code.
+
+    **Description**
+
+    After the category, there should be another "`/`" followed by a description which sums up the purpose of this specific branch. This description should be short and "kebab-cased". By default, you can use the title of the issue/ticket you are working on. Just replace any special character by "`-`".
+
+
+    **Examples**
+
+  - `feature/add-user-authentication`
+  - `bugfix/fix-login-validation`
+  - `hotfix/update-database-credentials`
+  - `test/experiment-with-new-ui`
+  </Accordion>
+  <Accordion title="Making a Commit">
+    <Warning>
+    Only commit via the Git-CLI / Terminal, since we have a type checking and test running script running before your commits. Same for pushing.
+    
+    </Warning>
+
+    **Category**
+
+    A commit message should start with a category of change. `feat`, `fix`, `refactor`, `chore`, and `hotfix`.
+
+    - `feat` is for adding a new feature.
+    - `fix` is for fixing a bug.
+    - `refactor` is for changing code for performance or convenience purpose (e.g. readability).
+    - `chore` is for everything else (writing documentation, formatting, adding tests, cleaning useless code etc).
+    - `hotfix` is for quickly addressing issues in production code.
+
+    After the category, there should be a "`:`" announcing the commit description.
+
+    **Description(s)**
+
+    After the colon, the commit description should consist in short statements describing the changes.
+
+    Each statement should start with a verb conjugated in an imperative way. Statements should be seperated from themselves with a "`;`".
+
+
+    **To sum up, follow this pattern when committing:**
+
+    ```
+    git commit -m '<category: do something; do some other things>'
+
+    ```
+
+    **Examples:**
+
+    - `git commit -m 'feat: add new button component; add new button components to templates'`
+    - `git commit -m 'fix: add the stop directive to button component to prevent propagation'`
+    - `git commit -m 'refactor: rewrite button component in TypeScript'`
+    - `git commit -m 'chore: write button documentation'`
+  </Accordion>
+  <Accordion title="Making a PR">
+    - Wait for your branch to generate a preview link on Vercel before creating a PR.
+    - Once the preview link is available, visit it and record a Loom video of your current feature (note: storage and Stripe-related features won't work on the preview, record them locally instead).
+    - Include this Loom video at the end of your task.
+    - Double-check that you have completed all requests of your ticket before creating a PR to the `dev` branch.
+
+    - Every task has a Task ID. When naming your PR, use the following format:
+
+    ```tsx
+    [YOUR_TASK_ID] feat / description
+    [YOUR_TASK_ID] fix / description
+    ...
+
+    ```
+
+    ![You can find the task id on the attributes list of your task](https://prod-files-secure.s3.us-west-2.amazonaws.com/6c287c3f-0b82-488b-bc08-312929473139/f6e38cc9-93c7-4668-9509-dd010d67c146/CleanShot_2024-04-03_at_15.57.08.png)
+
+    You can find the task id on the attributes list of your task
+
+    Including your task id in the PR will automatically link it to your Notion task and update the status to: For review (you won't see the ticket on your list anymore at this point).
+  </Accordion>
+  <Accordion title="Reviewing a PR">
+    <Note>
+    This page is solely relevant for task leads. If you are not a task lead, this page isn't important for you, and there's no need to read it.
+
+    </Note>
+
+    A PR review is divided into two parts. The first part involves understanding the task at hand, whether it's a feature, bug, chore, or something else, and checking if there is anything to test in the preview. The second parts is all about code health, making sure to the code meets a scalable and readable standard.
+
+    For instance, if a coder was asked to fix a problem or build a button, it should be tested using the preview link.
+
+    Even when the task involves only refactoring, it's crucial to test the affected features.
+
+    ---
+
+    # 1. Checking if task requirements have been met
+
+    Understanding the implications for the frontend/backend is essential for all tasks.
+
+    Take, for example, a task that requires a new blue button. You should expect to see a blue button in the preview loom AND in the testing of the preview link.
+
+    You should check tasks in the following order.
+
+    ### Review the preview loom provided by the developer
+
+    Each task should include a preview loom. If it doesn't, change the task status to "changes requested" and comment that a preview loom is missing. Steps below don’t need to be taken until there is a loom. (To safe your time)
+
+    Read more on statuses in [How to: Ticket status](https://www.notion.so/How-to-Ticket-status-adaccc8800da4f4ba4b7dae976ccdef0?pvs=21) 
+
+    ### Review the preview link:
+
+    Not all tasks require reviewing the link. In some cases, small features do not necessitate examining the link. For instance, translation fixes or minor UI tasks can be verified by just checking the loom. However, tasks that involve more file changes, such as five or more, should be tested using the preview link.
+
+    Once you successfully watched the loom and tested the preview link (if applicable) and verified that the task indeed has met the requirements, you can move on to the code review.
+
+    We perform the code review as a second step because reviewing anything before we have a satisfactory result for the task is not efficient. We only fine-tune the code once we're certain that the feature or bug fix works as expected.
+
+    ---
+
+    # 2. Code review
+
+    Now that the task works as expected we make sure the code is up to standard. 
+
+    Code must apply to: [Code Guidelines](https://www.notion.so/Code-Guidelines-e1616ec8d671478392c2add36881ffd4?pvs=21) 
+
+    If the PR doesn't adhere to the code guidelines, comment on GitHub, request changes, and set the task status back to 'change requested’ with a comment on the task that there is a code review on GitHub.
+
+    ---
+
+    ## 3. Merge
+
+    Yay, if you are here, everything is fine and we can merge the feature. Once you merged on github, you can delete the branch.
+  </Accordion>
+</AccordionGroup>
+
+## Code Guidelines
+<AccordionGroup>
+  <Accordion title="Why clean code?">
+    Clean code matters because it is easier to read and understand, which reduces the time and effort required for maintenance and debugging. It also promotes consistency and reliability, ensuring that new features or updates do not introduce unexpected issues. Additionally, clean code facilitates collaboration among developers, making it simpler for teams to work together effectively.
+
+    We have invested heavily in clean code to maintain high development speeds. We will continue to do so and expect you to be familiar with the fundamental principles as well.
+
+    If you really want to shine in this team we recommend the gold standard for clean code:
+
+    **Clean Code** by **Robert C. Martin**
+
+    Download the PDF here:
+
+    [Clean Code.pdf](https://prod-files-secure.s3.us-west-2.amazonaws.com/6c287c3f-0b82-488b-bc08-312929473139/5fde38cf-d249-45a1-be0c-2f0fd4a6c03a/Clean_Code.pdf)
+
+    Or for a more digestible version, you could also read [Clean Code](https://refactoring.guru/refactoring/what-is-refactoring), [Code Smells](https://refactoring.guru/refactoring/smells) and [Refactoring Techniques](https://refactoring.guru/refactoring/techniques)
+  </Accordion>
+  <Accordion title="Naming conventions">
+    **File Names**
+
+    Our file names in general are in **kebab-case** and not in camel-case. 
+
+    <Tip>
+    It is also crucial to understand [**Colocation**](https://www.notion.so/Colocation-fff2946d7033806490fddbca8d2550b4?pvs=21) to ensure these files not only have appropriate names but are also sorted correctly.
+
+    </Tip>
+
+    **Common files**
+
+    In our file structure, you'll find files that are needed frequently. To keep the structure clean and readable, we aim to streamline their naming.
+
+    | **File / Folder Purpose** | **Recommended Name** |
+    | --- | --- |
+    | Storing a single FE/BE function | *your-function-name*.ts |
+    | Storing a single nextjs server action | *your-action-name*.ts |
+    | Storing a singe hook | *use-your-hook*.ts |
+    | Storing a single type | *your-single-type*.types.ts |
+    | Storing a single const | *your-single-const.*const.ts |
+    | Storing a zustand state | zustand.ts |
+    | Storing multiple FE/BE functions | functions.ts |
+    | Storing multiple nextjs server actions  | actions.ts |
+    | Files for storing types | *name*.types.ts |
+    | Storing hooks | hooks.ts |
+    | Storing many consts | *name*.const.ts |
+    | Folder for keeping components and sub components for a page or component | /components |
+    | A component file | *your-component*.tsx |
+    | Storing functions for api calls | functions.ts |
+    | Storing a single function for api calls | *your-function-name*.ts |
+
+    *Gray and italic* text is supposed to be replaced by a fitting name. 
+
+    It is crucial to understand [**Colocation**](https://www.notion.so/Colocation-fff2946d7033806490fddbca8d2550b4?pvs=21) to ensure these files not only have appropriate names but are also sorted correctly.
+
+    **Translation tags**
+
+    Always use kebab-case for translation tags.
+  </Accordion>
+  <Accordion title="Colocation">
+    <Tip>
+    It’s also important to understand our [Naming conventions](https://www.notion.so/Naming-conventions-bb45e02432b9448f9f9dd38f5716278d?pvs=21) to not just sort the files right, but also name them correctly!
+
+    </Tip>
+
+    We want things to be close to where they are used, and colocation helps with that. If you have a page that uses components, you should place the components folder inside the page folder. This approach is natural and makes things easier to find.
+
+    ```jsx
+    / dashboard 
+    - / users
+      - /components // components that are just used in the users page
+      - functions.ts // functions that are just used in the users page
+      - actions.ts // actions for that page / component
+      - users.types.ts // Any types related to the component - scroll down for more
+    	- page.tsx
+    - / courses // each page gets it's own folder - with the things it uses inside
+    	- ...
+    - functions.ts // if there are functions shared by these pages, you can create
+                   // functions file higher up the hierachy. But not too high up
+                   // only on the level shared by the entities that use its functions
+
+    ...
+    /api
+    	- /get-items
+    		- functions.ts // colocate the functions of an api route in the same folder
+    									 // if functions are used in other places to put them in 
+    									 // src/app/functions/server
+    		- route.ts
+    	- /get-user
+    		- get-user.ts  // you can name the file after the function for easier
+    									 // search if the file has just one function
+    		- route.ts
+    ```
+
+    Use these axioms to place your files:
+
+    1. **Axiom of Usage Proximity:** Place components and functions as close as possible to where they are used to enhance accessibility and discoverability.
+    2. **Axiom of Page-Centric Organization:** Each page should have its own folder containing all components and functions that are exclusive to it, promoting modularity and easy maintenance.
+    3. **Axiom of Shared Logic Placement:** Shared components or functions should be placed at the nearest common ancestor in the directory hierarchy, avoiding unnecessary complexity and coupling.
+
+    ## Exceptions
+
+    **Types**
+
+    If types are used anywhere else outside of the respective component / page, do not move them up to the next shared position in the file hierarchy. Move them into the `src/app/types` . As soon as a type is shared it is to be put into that folder.
+
+    **Generic UI elements**
+
+    Elements that are highly reusable and useless on their own, like a button or tooltip is to be put in the `src/app/ui` folder. Components that are used across the software and do have a purpose on their own are to be put in the `src/app/components` folder.
+
+    It’s important to understand our [Naming conventions](https://www.notion.so/Naming-conventions-bb45e02432b9448f9f9dd38f5716278d?pvs=21) to not just sort the files right, but also name them correctly!
+  </Accordion>
+  <Accordion title="Clean Functions">
+    Here's an improved version of the selected text with three additional points:
+
+    1. Name functions descriptively so that developers can understand their purpose at a glance.
+    2. Keep functions concise and focused on a single task, adhering to the **Single Responsibility Principle** (**SRP**) - Read [Long Method](https://refactoring.guru/smells/long-method) for more
+    3. Place functions in the appropriate location within the codebase (refer to the [**Colocation**](https://www.notion.so/Colocation-fff2946d7033806490fddbca8d2550b4?pvs=21)  guide for best practices).
+    4. Implement proper error handling and logging within functions to enhance debugging and monitoring. Read 
+    5. Use descriptive parameter names and consider adding JSDoc comments for better function documentation.
+
+    ### The perfect function
+
+    ```tsx
+    export function doSomething(data) {
+      try {
+        // always log the function at the beginning so we have better
+        // tracability for errors
+        log.info("We are doing something...", { data });
+        // your code
+      } catch (error) {
+        log.error("Error getting rating schemas", error);
+        // additional work like returning or re throwing
+      }
+    }
+    ```
+
+    ### **Clean Parallel Requests**
+
+    Often when using async functions, it’s faster to run requests in parallel. Until now, we’ve mostly been using Promise.all for this, but there are many reasons why Promise.allSettled is better than Promise.all. Here is a clean way to use Promise.allSettled.
+
+    ```jsx
+    async function MAIN_SETTLED() {
+      try {
+        console.log("MAIN_SETTLED: running");
+        const promises = [1, 2, 3, 4, 5].map((i) => WORK(i));
+        const results = await Promise.allSettled(promises);
+
+        const errors = results.filter((r) => r.status === "rejected");
+        const successes = results
+          .filter((r) => r.status === "fulfilled")
+          .map((r) => r.value);
+
+        console.log("MAIN_SETTLED: We got results", results);
+      } catch (e) {
+        console.log("MAIN_SETTLED: failed for reason: ", e);
+        return e;
+      }
+    }
+    ```
+  </Accordion>
+  <Accordion title="Clean Components">
+    - Only have 1 component per file.
+    - Extract components when:
+        - it becomes harder to understand the composition of the current component because of the subcomponent (good component naming allows looking at a component file and immediately understanding what is happening and how it’s put together)
+        - the current component simply becomes too large
+    - Use our `ErrorBoundary` component to wrap your components if they have a lot of purposes or children.
+  </Accordion>
+  <Accordion title="Logging">
+    Your code must be logged properly. We are using sentry for our logging and wrote and abstraction on top of it. Since you are strictly applying **Single Responsibility Principle** it is recommended that each function has a least one info log in it. Functions should include more logging at each step tho as well as a try catch logic. Read [Clean Functions](https://www.notion.so/Clean-Functions-ff925cf183264698b966509811a21437?pvs=21) for more.
+
+    We have Sentry under the hood for event logging and error capturing. However, we've created our own abstraction over it to minimize boilerplate code.
+
+    - **The reason for creating an abstraction layer**
+
+        When examining Sentry code, for example, the breadcrumbs for UI click
+
+        ```tsx
+        Sentry.addBreadcrumb({
+          category: "ui.click",
+          message: "User clicked the button",
+          level: "info",
+        });
+
+        ```
+
+        and comparing it to our abstraction code
+
+        ```tsx
+        log.click("User clicked the button")
+        ```
+
+        You'll see that we greatly reduce boilerplate by creating more functions in the abstractions.
+
+        We have `log.info` for normal logs, `log.warn`, `log.click`, and much more. This significantly reduces unnecessary repetition and keeps our code clean.
+
+
+    Our logging abstraction layer includes several functions. Utilize these when coding to enhance future development experiences and aid in bug fixing related to your current code.
+
+    - `timespan`
+
+        Tracks the duration of a transaction and adds a breadcrumb. This aids in better comprehension of function performance and pinpointing areas of slowdown.
+
+        ```tsx
+        // Now we can look in Sentry in the "performance" tab and see how this
+        // function / transaction is running for our users. 
+        // This will help us identify transactions that are slow.
+        const user = log.timespan("Get User", () => {
+          // Simulate a database query operation
+          return getUser();
+        });
+        // Tip: The return type of the timespan function will be equal to the return
+        // type of the function you added.
+        ```
+
+    - `context`
+
+        The `context` function sets a custom context in Sentry that allows us to attach structured data to events. It's especially useful to include this at the start of functions and API calls, as it aids in understanding the initial conditions when debugging.
+
+        ```tsx
+        // now we know the initial conditions when looking at a bug
+        // helping us understand it.
+        log.context("User", { userId: "12345", name: "Martin Magiclord" });
+        ```
+
+    - `click`
+
+        Records a UI click event as a breadcrumb (you can add additional data about the event). This is useful for tracking user interactions within the application's interface and understanding user behavior.
+
+        ```tsx
+        // the data object is optional but can be provided to
+        // help developers understand certain conditions
+        log.click("Button clicked", { buttonId: "submit-button" });
+        ```
+
+    - `response`
+
+        Logs a network response as a breadcrumb, including status and URL information. This function is valuable for monitoring network activity within the application, aiding in debugging and performance optimization.
+
+        ```tsx
+        const response = await fetch("https://api.example.com/data");
+        // the response will be added as a breadcrumb
+        // with all necessary data frok that reponse
+        log.response(response);
+        ```
+
+    - `info`
+
+        Logs a generic informational event with an optional data payload. This function is suitable for logging general information about the application's state or behavior, providing context for debugging and analysis.
+
+        ```tsx
+        // the data object is optional but can be provided to
+        // help developers understand certain conditions
+        log.info("Event happened", { data: "your cool data", more_data: "really cool" });
+        ```
+
+    - `warn`
+
+        Logs a warning message with an optional data payload. Warnings indicate potential issues or unexpected behavior that may require attention but do not necessarily result in an error. This function helps in identifying and addressing issues before they escalate.
+
+        ```tsx
+        // the data object is optional but can be provided to
+        // help developers understand certain conditions
+        log.warn("Event happened", { data: "your cool data", more_data: "really cool" });
+        ```
+
+    - `error`
+
+        Captures an error event in Sentry, optionally with an additional message for context. This function is crucial for tracking and managing errors within the application, facilitating troubleshooting and resolution of issues encountered by users.
+
+        ```tsx
+        try {
+          // Code that may throw an error
+          riskyFunction();
+        } catch (error) {
+          log.error(error, "Error occurred during data processing");
+        }
+        ```
+
+
+    See more at: `src/utils/logger/logger.ts`
+
+    By incorporating the tools mentioned above, we can create transparent functions and components. This approach improves our understanding of user behavior, bugs, errors, and bottlenecks. 
+
+    ### **Examples of perfectly integrated logging:**
+
+    The logger works perfectly find in both frontend and backend.
+
+    - Frontend
+
+        ```tsx
+        import { log } from "@/src/utils/logger/logger";
+
+        export function CreateUserButton() {
+          async function createUser() {
+            // Use log.timespan for tracking the transaction timing
+            log.timespan("Create User", async () => {
+              try {
+                // Log the button click with log.click
+                log.click('Create User button clicked');
+
+                const response = await fetch("/create/user");
+                if (!response.ok) {
+                  // Log response error details with log.warn or log.error depending on your preference
+                  log.warn("HTTP error during user creation", {
+                    status: response.status,
+                    statusText: response.statusText,
+                  });
+
+                  throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                // Log a successful user creation event with log.info
+                log.info('User created successfully');
+
+                // Proceed with any further logic here...
+              } catch (error) {
+                // Capture any error that occurs during user creation with log.error
+                log.error(error, "Error creating user");
+              }
+            });
+          }
+
+          return <button onClick={createUser}>Create User</button>;
+        }
+
+        ```
+
+    - Backend
+
+        ```tsx
+        import { log } from "@/src/utils/logger/logger";
+
+        export default async function handler(
+          req: NextApiRequest,
+          res: NextApiResponse
+        ) {
+          if (req.method !== "POST") {
+            // Your logic for handling non-POST requests
+          }
+
+          log.timeSpan("Create Institution Room", async () => {
+            try {
+              log.info('Creating an institution room');
+
+              const data = JSON.parse(req.body);
+              const { userId } = getAuth(req);
+
+              if (!data.institutionId || !data.personCapacity || !data.address || !data.name) {
+                log.warn('Validation failed for request data');
+                return res.status(400).json({ message: "Invalid data" });
+              }
+
+              if (data.name.length > 500) {
+                log.warn('Name length validation failed');
+                return res.status(400).json({ message: "Name too long" });
+              }
+
+              if (!isValidCuid(data.institutionId)) {
+                log.warn('Institution ID validation failed');
+                return res.status(400).json({ message: "Invalid institution id" });
+              }
+
+              if (!(await isAdmin({ userId: userId!, institutionId: data.institutionId }))) {
+                log.warn('User is not authorized to create institution room');
+                return res.status(401).json({ message: "Unauthorized" });
+              }
+
+              const request = await createInstitutionRoom(
+                data.name,
+                data.institutionId,
+                data.personCapacity,
+                data.address,
+                data.addressNotes || "",
+                data.amenities || "",
+              );
+
+              log.info('Successfully created institution room');
+
+              res.json(request);
+            } catch (error) {
+              log.error(error, {
+                request: {
+                  method: req.method,
+                  url: req.url,
+                  data: req.body,
+                },
+              });
+              const statusCode = error.message === "Unauthorized" ? 401 :
+                                 error.message === "Invalid institution id" || error.message === "Invalid data" || error.message === "Name too long" ? 400 :
+                                 500;
+              res.status(statusCode).json({ message: error.message });
+            }
+          });
+        }
+
+        ```
+  </Accordion>
+  <Accordion title="Using server-only and client-only">
+    When building a Next.js application, it's important to ensure that server-side and client-side code are properly separated. This is where the `server-only` and `client-only` packages come in handy.
+    
+    ### Using `server-only`
+    
+    Import `server-only` at the top of any file that contains server-side functionality, and wrap your server-side code with the `serverOnly()` function:
+    
+    ```jsx
+    import 'server-only';
+    
+    const myServerFunction = () => {
+      // Server-side logic goes here
+      return 'This will only run on the server';
+    });
+    
+    ```
+    
+    Use `server-only` for:
+    
+    - API routes
+    - Database interactions
+    - Sensitive business logic
+    - Server-side rendering (SSR) logic
+    
+    ### Using `client-only`
+    
+    Import `client-only` at the top of any file that contains client-side functionality, and wrap your client-side code with the `clientOnly()` function:
+    
+    ```jsx
+    import 'client-only';
+    
+    const myClientFunction = () => {
+      // Client-side logic goes here
+      return 'This will only run on the client';
+    };
+    
+    ```
+    
+    Use `client-only` for:
+    
+    - Browser-specific APIs (e.g., `window`, `document`)
+    - Client-side state management
+    - UI-specific logic
+    - 
+    
+    By using both `server-only` and `client-only`, you can ensure that your server-side and client-side code are properly isolated and secure.
+    
+    ### References
+    
+    https://www.reddit.com/r/nextjs/comments/18ih6nd/useserver_vs_serveronly/
+    
+    https://nextjs.org/docs/app/building-your-application/rendering/composition-patterns#keeping-server-only-code-out-of-the-client-environment
+  </Accordion>
+</AccordionGroup>
