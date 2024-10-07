@@ -62,7 +62,10 @@
     {
       "group": "Git Guidelines",
       "pages": [
-        "git-guidelines/create-a-commit"
+        "git-guidelines/create-a-branch",
+        "git-guidelines/making-a-commit",
+        "git-guidelines/making-a-pr",
+        "git-guidelines/reviewing-a-pr"
       ]
     },
     {
