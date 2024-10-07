@@ -71,7 +71,14 @@
     {
       "group": "Code Guidelines",
       "pages": [
-        "code-guidelines/why-clean-my-code"
+        "code-guidelines/why-clean-code",
+        "code-guidelines/naming-conventions",
+        "code-guidelines/colocations",
+        "code-guidelines/clean-functions",
+        "code-guidelines/clean-components",
+        "code-guidelines/logging",
+        "code-guidelines/using-server-only-and-client-only"
+        
       ]
     },
     {
