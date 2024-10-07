@@ -1,0 +1,56 @@
+---
+title: 'Colocation'
+description: ''
+---
+<Tip>
+It’s also important to understand our [Naming conventions](https://www.notion.so/Naming-conventions-bb45e02432b9448f9f9dd38f5716278d?pvs=21) to not just sort the files right, but also name them correctly!
+
+</Tip>
+
+We want things to be close to where they are used, and colocation helps with that. If you have a page that uses components, you should place the components folder inside the page folder. This approach is natural and makes things easier to find.
+
+```jsx
+/ dashboard 
+- / users
+  - /components // components that are just used in the users page
+  - functions.ts // functions that are just used in the users page
+  - actions.ts // actions for that page / component
+  - users.types.ts // Any types related to the component - scroll down for more
+	- page.tsx
+- / courses // each page gets it's own folder - with the things it uses inside
+	- ...
+- functions.ts // if there are functions shared by these pages, you can create
+               // functions file higher up the hierachy. But not too high up
+               // only on the level shared by the entities that use its functions
+
+...
+/api
+	- /get-items
+		- functions.ts // colocate the functions of an api route in the same folder
+									 // if functions are used in other places to put them in 
+									 // src/app/functions/server
+		- route.ts
+	- /get-user
+		- get-user.ts  // you can name the file after the function for easier
+									 // search if the file has just one function
+		- route.ts
+```
+
+Use these axioms to place your files:
+
+1. **Axiom of Usage Proximity:** Place components and functions as close as possible to where they are used to enhance accessibility and discoverability.
+2. **Axiom of Page-Centric Organization:** Each page should have its own folder containing all components and functions that are exclusive to it, promoting modularity and easy maintenance.
+3. **Axiom of Shared Logic Placement:** Shared components or functions should be placed at the nearest common ancestor in the directory hierarchy, avoiding unnecessary complexity and coupling.
+
+## Exceptions
+
+**Types**
+
+If types are used anywhere else outside of the respective component / page, do not move them up to the next shared position in the file hierarchy. Move them into the `src/app/types` . As soon as a type is shared it is to be put into that folder.
+
+**Generic UI elements**
+
+Elements that are highly reusable and useless on their own, like a button or tooltip is to be put in the `src/app/ui` folder. Components that are used across the software and do have a purpose on their own are to be put in the `src/app/components` folder.
+
+It’s important to understand our [Naming conventions](https://www.notion.so/Naming-conventions-bb45e02432b9448f9f9dd38f5716278d?pvs=21) to not just sort the files right, but also name them correctly!
+ 
