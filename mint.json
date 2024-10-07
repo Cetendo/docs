@@ -53,6 +53,8 @@
       "group": "Get Started",
       "pages": [
         "introduction",
+        "git-guidelines",
+        "code-guidelines",
         "quickstart",
         "development"
       ]
