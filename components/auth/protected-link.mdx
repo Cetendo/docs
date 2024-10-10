@@ -2,3 +2,36 @@
 title: ProtectedLink
 description: ''
 ---
+Understand [Permissions and Roles //TODO](https://www.notion.so/Permissions-and-Roles-1142946d7033808c9551e3056b2b5413?pvs=21) first before reading this.
+
+## **Overview**
+
+The ProtectedLink component is a specialized component used to conditionally render a link based on user permissions. It is similar in purpose to the AccessGate component but specifically designed to wrap its children with a hyperlink.
+
+## **Functionality**
+
+The ProtectedLink component checks if a user has the necessary permissions to access a given link. If the user has the required permissions, it wraps the children with a Link component pointing to the specified href. If the user does not have the permissions, it simply returns the children without wrapping them in a link.
+
+## **Usage**
+
+### **Parameters**
+
+- **permissions**: An array of permissions required to render the link.
+- **layerIds** (optional): Specifies the layers in which the permissions should be checked.
+- **needsAllPermissions** (optional): A boolean indicating whether all specified permissions are required.
+- **href**: The URL to link to if the user has the necessary permissions.
+- **children**: The content to be conditionally wrapped in a link.
+
+### **Example Usage**
+
+In this example we want to show the course icon to everyone, but only let the users with the right permissions be able to click on it.
+
+```tsx
+<ProtectedLink
+  permissions={["read:course", "participate:course"]}
+  layerIds={[layerId]}
+  href={`/dashboard/course/${layerId}/learning-journey`}
+>
+  <CourseIcon />
+</ProtectedLink>
+```

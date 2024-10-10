@@ -2,3 +2,39 @@
 title: 'AccessProvider'
 description: ''
 ---
+Understand [Permissions and Roles //TODO](https://www.notion.so/Permissions-and-Roles-1142946d7033808c9551e3056b2b5413?pvs=21) first before reading this
+
+Unlike the [Protect](/components/auth/protect)  component, which hides components based on permissions, the `AccessProvider` component simply passes the access information downwards the component tree.
+
+### Props
+
+The AccessProvider component takes in three props:
+
+- `layerIds`?: A string or array of strings representing the layer IDs to check against the user's permissions.
+- `permissions`: An array of `Permission` objects that define what the user needs to access the feature or resource.
+- `children`: A function that takes a single prop `hasAccess` (a boolean indicating whether the user has access) and returns a React node. This is where the magic happens – if the user has access, the node is rendered; otherwise, it's not!
+
+Unlike the [Protect](/components/auth/protect)  component, which hides components based on permissions, the `AccessProvider` component simply passes the access information downwards the component tree.
+
+Example could be using it to conditionally render a menu item:
+
+```jsx
+import AccessProvider from './AccessProvider';
+
+const MyMenuItem = () => {
+  return (
+    <AccessProvider
+      layerIds={['123', '456']} // optional
+      permissions={["read:something"]}
+    >
+      {({ hasAccess }) => (hasAccess ?
+        <MenuItem>View Profile</MenuItem> :
+        <div>Cannot view</div>
+      )}
+    </AccessProvider>
+  );
+};
+
+```
+
+In this case, the menu item is only rendered if the user has the `read:something` permission in the `user` or `guest` layer.

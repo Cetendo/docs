@@ -1,4 +1,59 @@
 ---
 title: Protect
-description: ''
+description: 'Welcome to the home of your new documentation'
 ---
+## Overview
+
+The `AccessGate` component is a crucial part of the application, designed to control access to various parts of the UI based on user permissions. It ensures that only users with the appropriate permissions can view or interact with certain components. This is particularly useful in applications with role-based access control, where different users have different levels of access.
+
+Understand [Permissions and Roles //TODO](https://www.notion.so/Permissions-and-Roles-1142946d7033808c9551e3056b2b5413?pvs=21) first before reading this.
+
+## AccessGate Component
+
+### Purpose
+
+The `AccessGate` component is used to conditionally render its children based on the user's permissions. It acts as a gatekeeper, ensuring that only users with the necessary permissions can access certain parts of the UI.
+
+### Usage
+
+The `AccessGate` component is typically used in the following way:
+
+```tsx
+<AccessGate permissions={["read:settings"]}>
+  <SomeProtectedComponent />
+</AccessGate>
+
+```
+
+In this example, `SomeProtectedComponent` will only be rendered if the user has the `read:settings` permission.
+
+### Props
+
+- **permissions**: An array of permissions required to access the children. This is a mandatory prop.
+- **layerIds**: Optional. Specifies the layers in which the permissions should be checked. This allows for layer-specific access control.
+- **needsAllPermissions**: Optional. A boolean indicating whether the user needs all the specified permissions (`true`) or just one of them (`false`).
+
+### Implementation Details
+
+The `AccessGate` component relies on the `hasPermissions` function to determine if the user has the necessary permissions. This function checks the user's roles and permissions, considering the specified layers and whether all permissions are required.
+
+### Example
+
+```tsx
+<AccessGate permissions={["write:user-notes"]} layerIds={["layer1", "layer2"]} needsAllPermissions={true}>
+  <Button>Create Note</Button>
+</AccessGate>
+
+```
+
+In this example, the `Button` will only be rendered if the user has the `write:user-notes` permission in both `layer1` and `layer2`.
+
+## Backend Support
+
+The backend provides several functions to supplement the `AccessGate` component:
+
+- **hasPermission**: Checks if a user has a specific permission, optionally within a specific layer.
+- **getLayersUserHasPermissionsIn**: Retrieves the layers in which a user has certain permissions.
+- **getUsersThatHavePermissionInLayers**: Finds users who have a specific permission in given layers.
+
+These functions interact with the database to fetch user roles and permissions, ensuring that the access control logic is consistent and up-to-date.
