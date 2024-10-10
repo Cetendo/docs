@@ -28,7 +28,7 @@
   "tabs": [
     {
       "name": "Components",
-      "url": "api-reference"
+      "url": "components"
     }
   ],
   "anchors": [
@@ -53,8 +53,6 @@
       "group": "Get Started",
       "pages": [
         "introduction",
-        "git-guidelines",
-        "code-guidelines",
         "quickstart",
         "development"
       ]
@@ -82,17 +80,17 @@
       ]
     },
     {
-      "group": "API Documentation",
+      "group": "Components Documentation",
       "pages": [
-        "api-reference/introduction"
+        "components/introduction"
       ]
     },
     {
       "group": "Auth Components",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "components/auth/access-provider",
+        "components/auth/protect",
+        "components/auth/protected-link"
       ]
     }
   ],
