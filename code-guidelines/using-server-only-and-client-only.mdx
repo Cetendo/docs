@@ -6,7 +6,7 @@ When building a Next.js application, it's important to ensure that server-side a
     
 ### Using `server-only`
     
-Import `server-only` at the top of any file that contains server-side functionality, and wrap your server-side code with the `serverOnly()` function:
+Import `server-only` at the top of any file that contains server-side functionality. If you now import anything from this file in a client file, it will throw and error.
     
 ```jsx
 import 'server-only';
@@ -23,11 +23,10 @@ Use `server-only` for:
 - API routes
 - Database interactions
 - Sensitive business logic
-- Server-side rendering (SSR) logic
     
 ### Using `client-only`
     
-Import `client-only` at the top of any file that contains client-side functionality, and wrap your client-side code with the `clientOnly()` function:
+Import `client-only` at the top of any file that contains client-side functionality. If you now import this into a server based file, it will throw an error.
     
 ```jsx
 import 'client-only';
@@ -44,12 +43,11 @@ Use `client-only` for:
 - Browser-specific APIs (e.g., `window`, `document`)
 - Client-side state management
 - UI-specific logic
-- 
+
     
 By using both `server-only` and `client-only`, you can ensure that your server-side and client-side code are properly isolated and secure.
     
 ### References
     
 https://www.reddit.com/r/nextjs/comments/18ih6nd/useserver_vs_serveronly/
-    
 https://nextjs.org/docs/app/building-your-application/rendering/composition-patterns#keeping-server-only-code-out-of-the-client-environment
