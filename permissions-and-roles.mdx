@@ -1,0 +1,56 @@
+---
+title: 'Permissions and Roles'
+description: ''
+---
+## Overview
+
+Permissions in Fuxam Software are a fundamental part of the role-based access control system. They define what actions a user can perform within the application. Permissions are associated with roles, and users are granted permissions through their assigned roles.
+
+## Key Components
+
+### Permissions
+
+Permissions are defined as strings that represent specific actions a user can perform. They are categorized into different areas such as settings, user management, courses, structure, chat, calendar, and backups. Each permission string follows a naming convention that indicates the action and the resource, e.g., `"read:users"`, `"update:settings"`.
+
+### Roles
+
+Roles are collections of permissions. They are defined in the `InstitutionRole` model in the database and can be assigned to users through the `InstitutionUserRole` model. Roles can be default or custom, and they determine the level of access a user has within the application.
+
+## How Users Get Permissions
+
+Users are assigned roles through the `InstitutionUserRole` model. Each role grants the user a set of permissions defined in the `InstitutionRole` model. Users can have multiple roles, and their effective permissions are the union of all permissions from their assigned roles.
+
+## Protecting Resources
+
+### Backend Protection
+
+Use the `hasPermission` function to protect backend resources. This function checks if a user has a specific permission and throws an error if they do not.
+
+```tsx
+await hasPermission("read:users"); // Throws if this is false
+```
+
+### Frontend Protection
+
+Use the `AccessGate` or `AccessSwitch` components to conditionally render UI elements based on user permissions.
+
+### AccessGate
+
+```tsx
+<AccessGate permissions={["read:users"]}>
+  <ProtectedComponent />
+</AccessGate>
+```
+
+You can find more on the AccessGate in: [Protect](/components/auth/protect) 
+
+### AccessSwitch
+
+```tsx
+<AccessSwitch permissions={["read:users"]}>
+  {({ hasAccess }) => hasAccess ? <ProtectedComponent /> : <UnprotectedComponent /> }
+</AccessSwitch>
+
+```
+
+These components utilize the `hasPermissions` function to determine if the user has the necessary permissions to access the component. More on the AccessSwitch in [AccessProvider](/components/auth/access-provider)

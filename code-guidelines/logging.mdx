@@ -2,236 +2,173 @@
 title: 'Logging'
 description: ''
 ---
-Your code must be logged properly. We are using sentry for our logging and wrote and abstraction on top of it. Since you are strictly applying **Single Responsibility Principle** it is recommended that each function has a least one info log in it. Functions should include more logging at each step tho as well as a try catch logic. Read [Clean Functions](https://www.notion.so/Clean-Functions-ff925cf183264698b966509811a21437?pvs=21) for more.
 
-We have Sentry under the hood for event logging and error capturing. However, we've created our own abstraction over it to minimize boilerplate code.
+To ensure effective error tracking and event logging, we use Sentry in combination with a custom abstraction layer. This abstraction simplifies logging across your codebase, encourages the **Single Responsibility Principle**, and enhances debugging and performance analysis.
 
-- **The reason for creating an abstraction layer**
-    
-    When examining Sentry code, for example, the breadcrumbs for UI click
-    
-    ```tsx
-    Sentry.addBreadcrumb({
-      category: "ui.click",
-      message: "User clicked the button",
-      level: "info",
-    });
-    
-    ```
-    
-    and comparing it to our abstraction code
-    
-    ```tsx
-    log.click("User clicked the button")
-    ```
-    
-    You'll see that we greatly reduce boilerplate by creating more functions in the abstractions.
-    
-    We have `log.info` for normal logs, `log.warn`, `log.click`, and much more. This significantly reduces unnecessary repetition and keeps our code clean.
-    
+## Why an Abstraction Layer?
 
-Our logging abstraction layer includes several functions. Utilize these when coding to enhance future development experiences and aid in bug fixing related to your current code.
+
+<Accordion title="The reason for creating an abstraction layer">
+  When using Sentry, logging actions such as tracking UI clicks requires verbose syntax. Here's an example using Sentry directly:
+
+  ```tsx
+  Sentry.addBreadcrumb({
+    category: "ui.click",
+    message: "User clicked the button",
+    level: "info",
+  });
+  ```
+
+  With our abstraction, the same task is simplified:
+
+  ```tsx
+  log.click("User clicked the button");
+  ```
+
+  This abstraction layer reduces boilerplate code, increases clarity, and helps developers focus on core functionality while maintaining comprehensive logging.
+</Accordion>
+
+## Logging Functions Overview
+
+Here are the key logging functions provided by our abstraction, each with a specific use case. These should be used throughout your code to ensure clear and helpful logging.
+
 <AccordionGroup>
-    <Accordion title="timespan">
-    
-    Tracks the duration of a transaction and adds a breadcrumb. This aids in better comprehension of function performance and pinpointing areas of slowdown.
-    
+  <Accordion title="timespan: Tracking Performance">
+    Tracks the duration of an operation and logs it as a breadcrumb. This is useful for monitoring function performance and identifying slow transactions.
+
     ```tsx
-    // Now we can look in Sentry in the "performance" tab and see how this
-    // function / transaction is running for our users. 
-    // This will help us identify transactions that are slow.
     const user = log.timespan("Get User", () => {
-      // Simulate a database query operation
       return getUser();
     });
-    // Tip: The return type of the timespan function will be equal to the return
-    // type of the function you added.
     ```
-    </Accordion>
-    <Accordion title="context">
-    
-    The `context` function sets a custom context in Sentry that allows us to attach structured data to events. It's especially useful to include this at the start of functions and API calls, as it aids in understanding the initial conditions when debugging.
-    
+
+    The `timespan` function logs the time taken for the operation and provides insights in Sentry's performance tab.
+  </Accordion>
+
+  <Accordion title="context: Capturing Contextual Information">
+    Attaches structured data to events, which helps debug errors by providing context about the initial conditions.
+
     ```tsx
-    // now we know the initial conditions when looking at a bug
-    // helping us understand it.
     log.context("User", { userId: "12345", name: "Martin Magiclord" });
     ```
-    </Accordion>
-    <Accordion title="click">
-    
-    Records a UI click event as a breadcrumb (you can add additional data about the event). This is useful for tracking user interactions within the application's interface and understanding user behavior.
-    
+
+    This is particularly useful at the beginning of API calls or complex operations.
+  </Accordion>
+
+  <Accordion title="click: Logging UI Click Events">
+    Records a UI click event with optional additional data, helping track user interactions.
+
     ```tsx
-    // the data object is optional but can be provided to
-    // help developers understand certain conditions
-    log.click("Button clicked", { buttonId: "submit-button" });
+    log.click("Submit button clicked", { buttonId: "submit-button" });
     ```
-    </Accordion>
-    <Accordion title="response">
-    
-    Logs a network response as a breadcrumb, including status and URL information. This function is valuable for monitoring network activity within the application, aiding in debugging and performance optimization.
-    
+  </Accordion>
+
+  <Accordion title="response: Logging Network Responses">
+    Logs network responses, including status and URL, to aid in debugging network-related issues.
+
     ```tsx
     const response = await fetch("https://api.example.com/data");
-    // the response will be added as a breadcrumb
-    // with all necessary data frok that reponse
     log.response(response);
     ```
-    </Accordion>
-    <Accordion title="info">
-    
-    Logs a generic informational event with an optional data payload. This function is suitable for logging general information about the application's state or behavior, providing context for debugging and analysis.
-    
+  </Accordion>
+
+  <Accordion title="info: Logging Informational Events">
+    Logs general informational events with optional additional data. Use this to record significant non-error events.
+
     ```tsx
-    // the data object is optional but can be provided to
-    // help developers understand certain conditions
-    log.info("Event happened", { data: "your cool data", more_data: "really cool" });
+    log.info("User logged in", { userId: "12345" });
     ```
-    </Accordion>
-    <Accordion title="warn">
-    
-    Logs a warning message with an optional data payload. Warnings indicate potential issues or unexpected behavior that may require attention but do not necessarily result in an error. This function helps in identifying and addressing issues before they escalate.
-    
+  </Accordion>
+
+  <Accordion title="warn: Logging Warnings">
+    Logs a warning message with optional additional data. Warnings indicate potential issues that may require attention but aren't yet critical errors.
+
     ```tsx
-    // the data object is optional but can be provided to
-    // help developers understand certain conditions
-    log.warn("Event happened", { data: "your cool data", more_data: "really cool" });
+    log.warn("Low disk space", { availableSpace: "2GB" });
     ```
-    </Accordion>
-    <Accordion title="error">
-    
-    Captures an error event in Sentry, optionally with an additional message for context. This function is crucial for tracking and managing errors within the application, facilitating troubleshooting and resolution of issues encountered by users.
-    
+  </Accordion>
+
+  <Accordion title="error: Logging Errors">
+    Logs errors with an optional context message. This is crucial for capturing and reporting errors in both development and production.
+
     ```tsx
     try {
-      // Code that may throw an error
       riskyFunction();
     } catch (error) {
-      log.error(error, "Error occurred during data processing");
+      log.error("Error during risky function execution", error);
     }
     ```
-    </Accordion>
-</AccordionGroup>    
+  </Accordion>
+</AccordionGroup>
 
-See more at: `src/utils/logger/logger.ts`
+## Debug Mode and Error Handling in Non-Production Environments
 
-By incorporating the tools mentioned above, we can create transparent functions and components. This approach improves our understanding of user behavior, bugs, errors, and bottlenecks. 
+In non-production environments (such as development or staging), errors are logged, but they may not trigger full Sentry captures unless explicitly required.
 
-### **Examples of perfectly integrated logging:**
+- **Non-Production**: Errors are logged using `log.error`, but they do not send a full report to Sentry unless necessary.
+- **Production**: All errors are captured and sent to Sentry for analysis.
 
-The logger works perfectly find in both frontend and backend.
+This ensures minimal noise during development while maintaining comprehensive logging in production.
+
+## Example Usage in Frontend and Backend
 
 <AccordionGroup>
-    <Accordion title="Frontend">
-    
+  <Accordion title="Frontend Example">
+    Here's how to log actions and errors in the frontend:
+
     ```tsx
-    import { log } from "@/src/utils/logger/logger";
-    
+    import { log } from "@/src/app/functions/log";
+
     export function CreateUserButton() {
       async function createUser() {
-        // Use log.timespan for tracking the transaction timing
         log.timespan("Create User", async () => {
+          log.click("Create User button clicked");
+
           try {
-            // Log the button click with log.click
-            log.click('Create User button clicked');
-    
             const response = await fetch("/create/user");
             if (!response.ok) {
-              // Log response error details with log.warn or log.error depending on your preference
               log.warn("HTTP error during user creation", {
                 status: response.status,
                 statusText: response.statusText,
               });
-    
               throw new Error(`HTTP error! status: ${response.status}`);
             }
-    
-            // Log a successful user creation event with log.info
-            log.info('User created successfully');
-    
-            // Proceed with any further logic here...
+
+            log.info("User created successfully");
           } catch (error) {
-            // Capture any error that occurs during user creation with log.error
-            log.error(error, "Error creating user");
+            log.error("Error creating user", error);
           }
         });
       }
-    
+
       return <button onClick={createUser}>Create User</button>;
     }
-    
     ```
-    
-    </Accordion>
-    <Accordion title="backend">
-    
+  </Accordion>
+
+  <Accordion title="Backend Example">
+    Here's an example of logging actions and errors in the backend:
+
     ```tsx
-    import { log } from "@/src/utils/logger/logger";
-    
-    export default async function handler(
-      req: NextApiRequest,
-      res: NextApiResponse
-    ) {
-      if (req.method !== "POST") {
-        // Your logic for handling non-POST requests
-      }
-    
-      log.timeSpan("Create Institution Room", async () => {
+    import { log } from "@/src/app/functions/log";
+
+    export default async function handler(req, res) {
+      log.timespan("Create Institution Room", async () => {
         try {
-          log.info('Creating an institution room');
-    
-          const data = JSON.parse(req.body);
-          const { userId } = getAuth(req);
+          log.context("Request", { method: req.method, body: req.body });
           
-          if (!data.institutionId || !data.personCapacity || !data.address || !data.name) {
-            log.warn('Validation failed for request data');
-            return res.status(400).json({ message: "Invalid data" });
-          }
-    
-          if (data.name.length > 500) {
-            log.warn('Name length validation failed');
-            return res.status(400).json({ message: "Name too long" });
-          }
-    
-          if (!isValidCuid(data.institutionId)) {
-            log.warn('Institution ID validation failed');
-            return res.status(400).json({ message: "Invalid institution id" });
-          }
-    
-          if (!(await isAdmin({ userId: userId!, institutionId: data.institutionId }))) {
-            log.warn('User is not authorized to create institution room');
-            return res.status(401).json({ message: "Unauthorized" });
-          }
-    
-          const request = await createInstitutionRoom(
-            data.name,
-            data.institutionId,
-            data.personCapacity,
-            data.address,
-            data.addressNotes || "",
-            data.amenities || "",
-          );
-    
-          log.info('Successfully created institution room');
-    
-          res.json(request);
+          // Business logic here...
+          log.info("Successfully created institution room");
+
+          res.status(200).json({ message: "Success" });
         } catch (error) {
-          log.error(error, {
-            request: {
-              method: req.method,
-              url: req.url,
-              data: req.body,
-            },
-          });
-          const statusCode = error.message === "Unauthorized" ? 401 :
-                             error.message === "Invalid institution id" || error.message === "Invalid data" || error.message === "Name too long" ? 400 :
-                             500;
-          res.status(statusCode).json({ message: error.message });
+          log.error("Error creating institution room", error);
+          res.status(500).json({ message: error.message });
         }
       });
     }
-    
     ```
-    </Accordion>
-</AccordionGroup> 
+  </Accordion>
+</AccordionGroup>
+
+For more details, refer to the updated logging utility at `src/app/functions/log.ts`.
