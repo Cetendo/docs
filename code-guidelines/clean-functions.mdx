@@ -2,50 +2,25 @@
 title: 'Clean Functions'
 description: ''
 ---
-Here's an improved version of the selected text with three additional points:
 
 1. Name functions descriptively so that developers can understand their purpose at a glance.
 2. Keep functions concise and focused on a single task, adhering to the **Single Responsibility Principle** (**SRP**) - Read [Long Method](https://refactoring.guru/smells/long-method) for more
-3. Place functions in the appropriate location within the codebase (refer to the [**Colocation**](/code-guidelines/colocations)  guide for best practices).
-4. Implement proper error handling and logging within functions to enhance debugging and monitoring. Read 
+3. Place functions in the appropriate location within the codebase (read the [**Colocation**](/code-guidelines/colocations)  guide for best practices).
+4. Implement proper error handling and logging within functions to enhance debugging and monitoring. 
 5. Use descriptive parameter names and consider adding JSDoc comments for better function documentation.
 
 ### The perfect function
 
 ```tsx
-export function doSomething(data) {
+export function doSomething(data: CoolType) {
   try {
     // always log the function at the beginning so we have better
     // tracability for errors
     log.info("We are doing something...", { data });
     // your code
   } catch (error) {
-    log.error("Error getting rating schemas", error);
+    log.error("Doing something went wrong...", error);
     // additional work like returning or re throwing
-  }
-}
-```
-
-### **Clean Parallel Requests**
-
-Often when using async functions, it’s faster to run requests in parallel. Until now, we’ve mostly been using Promise.all for this, but there are many reasons why Promise.allSettled is better than Promise.all. Here is a clean way to use Promise.allSettled.
-
-```jsx
-async function MAIN_SETTLED() {
-  try {
-    console.log("MAIN_SETTLED: running");
-    const promises = [1, 2, 3, 4, 5].map((i) => WORK(i));
-    const results = await Promise.allSettled(promises);
-
-    const errors = results.filter((r) => r.status === "rejected");
-    const successes = results
-      .filter((r) => r.status === "fulfilled")
-      .map((r) => r.value);
-
-    console.log("MAIN_SETTLED: We got results", results);
-  } catch (e) {
-    console.log("MAIN_SETTLED: failed for reason: ", e);
-    return e;
   }
 }
 ```
