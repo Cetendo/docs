@@ -1,0 +1,65 @@
+---
+title: 'Box'
+description: ''
+---
+## **Overview**
+
+The `Box` component is a reusable UI component designed to wrap content with customizable padding, background, and additional class names. It provides flexibility to control padding and background appearance through props while using `clsx` for conditional class management.
+
+## **Usage**
+
+```tsx
+import Box from '@/src/app/ui/box';
+
+function MyComponent() {
+  return (
+    <Box noPadding={true} smallPadding={true} className="custom-class">
+      <p>This is some content inside the box.</p>
+    </Box>
+  );
+}
+
+```
+
+## **API**
+
+### **Props**
+
+- **`noPadding?`**: `boolean` - If `true`, the box will have no padding (default: `false`).
+- **`smallPadding?`**: `boolean` - If `true`, the box will have small padding (`p-2`) (default: `false`).
+- **`hugePadding?`**: `boolean` - If `true`, the box will have large padding (`p-8`) (default: `false`).
+- **`noBackground?`**: `boolean` - If `true`, the box will not have a background color (default: `false`).
+- **`className?`**: `string` - Additional class names to apply to the box.
+- **`children`**: `React.ReactNode` - The content to render inside the box.
+
+### **Default Props**
+
+- `noPadding`: `false`
+- `smallPadding`: `false`
+- `noBackground`: `false`
+- `hugePadding`: `false`
+
+### **Class Management**
+
+- **Padding**:
+    - If `noPadding` is `true`, padding is removed.
+    - If `smallPadding` is `true`, it applies a small padding (`p-2`).
+    - If `hugePadding` is `true`, it applies large padding (`p-8`).
+    - If none are set, it defaults to moderate padding (`px-4 py-3`).
+- **Background**:
+    - If `noBackground` is `false`, it applies a background class (`bg-foreground`).
+- **Class Composition**:
+    - Combines the above conditions with any additional classes passed via the `className` prop using `clsx`.
+
+### **Example: Box with Huge Padding and Custom Background**
+
+```tsx
+import Box from '@/src/app/ui/box';
+...
+<Box hugePadding={true} className="bg-customColor">
+  <p>Content with large padding and custom background</p>
+</Box>
+...
+```
+
+This example demonstrates how to apply large padding and a custom background color. The padding is `p-8` due to the `hugePadding` prop.

@@ -1,0 +1,62 @@
+---
+title: 'ColorPicker'
+description: ''
+---
+### How it Works
+
+This component is a color-tastic combo of a text input and a color picker. Click the button, and a popover appears with an input field and a color picker. Type in a new color code or pick a color, and it updates in real-time. Easy peasy!
+
+![CleanShot 2024-08-28 at 18.12.07.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/6c287c3f-0b82-488b-bc08-312929473139/fd9be58d-d566-4e8f-8dc6-7053f26679a4/CleanShot_2024-08-28_at_18.12.07.png)
+
+### Props
+
+- `color`: The initial color value (defaults to `#FF5675`)
+- `onChange`: A function that gets called whenever the color changes, passing the new color value as an argument
+
+### Example Usage
+
+### Basic Example
+
+```jsx
+import ColorPicker from './ColorPicker';
+
+function MyComponent() {
+  const [color, setColor] = useState('#FF0000');
+
+  return (
+    <ColorPicker
+      color={color}
+      onChange={(newColor) => {
+        setColor(newColor);
+        console.log(`New color: ${newColor}`);
+      }}
+    />
+  );
+}
+
+```
+
+### Advanced Example with Custom Button Text
+
+```jsx
+import ColorPicker from './ColorPicker';
+
+function MyComponent() {
+  const [color, setColor] = useState('#00FF00');
+
+  return (
+    <ColorPicker
+      color={color}
+      onChange={(newColor) => {
+        setColor(newColor);
+        console.log(`New color: ${newColor}`);
+      }}
+    >
+      <Button variant="outline">Change Color!</Button>
+    </ColorPicker>
+  );
+}
+
+```
+
+That's it! With the Color Picker component, you can add a pop of color to your app and make your users smile.

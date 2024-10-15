@@ -1,0 +1,72 @@
+---
+title: 'ReplaceWithHighlight'
+description: ''
+---
+This like this (image on the right side) are hard to make with our translation. It requires a lot of hacking around.
+
+![CleanShot 2024-08-26 at 17.12.12.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/6c287c3f-0b82-488b-bc08-312929473139/a5c1596b-88db-4a23-a711-2a94f1e1e77d/CleanShot_2024-08-26_at_17.12.12.png)
+
+So why not have an equal counter part to the `replace` function as a component that even allows you to style values? Say hello to the `ReplaceWithHighlight` component.
+
+## Props
+
+### `template`: The Template String
+
+The `template` prop is where you pass in your template string with placeholders in the format `{{key}}`. 
+
+### `params`: The Object with Replacement Values
+
+The `params` prop is an object that maps keys to values, which are used to replace the placeholders in your template string. It's like a dictionary that says, "Hey, when you see `{{key}}`, replace it with `value`!"
+
+### `className`: Optional Styling for Highlighted Elements
+
+The `className` prop is an optional string that lets you override the default highlight styles. Want to make your highlights pop with a custom color or font? This is the prop for you!
+
+## Example Usages
+
+### Simple Template Replacement
+
+```jsx
+import React from 'react';
+import { ReplaceWithHighlight } from './ReplaceWithHighlight';
+
+const template = 'Hello, {{name}}!';
+const params = { name: 'John Doe' };
+
+const App = () => {
+  return (
+    <div>
+      <ReplaceWithHighlight template={template} params={params} />
+    </div>
+  );
+};
+
+```
+
+In this example, the `ReplaceWithHighlight` component will replace the `{{name}}` placeholder with a highlighted element containing the value `John Doe`.
+
+### Custom Highlight Styles
+
+```jsx
+import React from 'react';
+import { ReplaceWithHighlight } from './ReplaceWithHighlight';
+
+const template = 'You have {{count}} new messages!';
+const params = { count: 5 };
+const customHighlightClass = 'bg-yellow-200 px-2 py-1 rounded';
+
+const App = () => {
+  return (
+    <div>
+      <ReplaceWithHighlight
+        template={template}
+        params={params}
+        className={customHighlightClass}
+      />
+    </div>
+  );
+};
+
+```
+
+In this example, we're using the `className` prop to override the default highlight styles with a custom class that adds a yellow background, padding, and rounded corners to the highlighted element.

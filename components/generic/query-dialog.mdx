@@ -1,0 +1,98 @@
+---
+title: 'QueryDialog'
+description: ''
+---
+The QueryModal component is a powerful tool that allows you to easily manage modal windows. It works by reading and modifying the URL query parameters to control the modal's open state, providing a seamless user experience. 
+
+The query modal solves the following problems:
+
+- Making the modal content **shareable through a URL**.
+- **Preserving context** when the page is refreshed, instead of closing the modal.
+- **Closing the modal on backwards navigation** rather than going to the previous route.
+- **Reopening the modal on forwards navigation**.
+
+## Props
+
+- `queryParam`: `string`
+Required string that specifies the query parameter key controlling the modal's open state. Example: if set to "my-modal", the modal opens when URL contains open=my-modal.
+- `children`: `((props: { closeDialog: () => void }) => React.ReactNode) | React.ReactNode`
+Required React node or a function that returns a React node. If a function is provided, it will receive an object with a closeDialog function that can be used to close the modal programmatically.
+
+## Example Usages
+
+### Example 1: Simple Modal
+
+```
+import QueryModal from "@/src/app/components/query-modal";
+
+const MyModal = () => (
+  <QueryModal queryParam="my-modal">
+    <div>Modal content</div>
+  </QueryModal>
+);
+```
+
+This modal opens when the URL query parameter open=myModal is present.
+
+### Example 2: Multiple Modals
+
+```
+import QueryModal from "@/src/app/components/query-modal";
+
+const MyPage = () => (
+  <div>
+    <QueryModal queryParam="my-modal1">
+      <div>Modal 1 content</div>
+    </QueryModal>
+    <QueryModal queryParam="my-modal2">
+      <div>Modal 2 content</div>
+    </QueryModal>
+  </div>
+);
+```
+
+This example demonstrates multiple modals on the same page, each controlled by a different query parameter.
+
+### Example 3: Closing Modal Programmatically
+
+```jsx
+import QueryModal from "@/src/app/components/query-modal";
+
+const MyModal = () => (
+  <QueryModal queryParam="my-modal">
+    {({ closeDialog }) => (
+      <div>
+        <p>Modal content</p>
+        <button onClick={closeDialog}>Close Modal</button>
+      </div>
+    )}
+  </QueryModal>
+);
+```
+
+In this example, the children prop is a function that receives an object with a closeDialog function. This function can be used to close the modal programmatically, such as when a button is clicked.
+
+## Opening a QueryModal
+
+To open a QueryModal, ensure it's on the same page as the Link triggering it. Alternatively, you can use a Link to navigate to another page that contains a QueryModal and open it there.
+
+```jsx
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+export default function MyComponent() {
+  const router = useRouter();
+
+  return (
+    <div>
+      {/* We also altered the shadcn button to take a href */}
+      <Link href="?open=my-modal"> 
+        <a>Open Modal</a>
+      </Link>
+      <QueryModal queryParam="my-modal">
+        {/* Modal content */}
+      </QueryModal>
+    </div>
+  );
+}
+```

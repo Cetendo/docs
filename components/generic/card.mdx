@@ -1,0 +1,117 @@
+---
+title: 'Card'
+description: ''
+---
+## **Overview**
+
+The `Card` component is a flexible and reusable container designed to display content in a structured format. It consists of several sub-components such as `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, and `CardFooter` to create a well-structured layout.
+
+## **Usage**
+
+```tsx
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/src/app/ui/card';
+
+function MyComponent() {
+  return (
+    <Card className="max-w-md">
+      <CardHeader>
+        <CardTitle>Card Title</CardTitle>
+        <CardDescription>This is a card description.</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p>This is the card content area. You can place any elements here.</p>
+      </CardContent>
+      <CardFooter>
+        <button className="btn">Action</button>
+      </CardFooter>
+    </Card>
+  );
+}
+
+```
+
+## **API**
+
+### **Card**
+
+The outer wrapper for the entire card.
+
+- **Props**: Inherits from `React.HTMLAttributes<HTMLDivElement>`
+
+### **CardHeader**
+
+Wrapper for the card's header, usually containing the title and description.
+
+- **Props**: Inherits from `React.HTMLAttributes<HTMLDivElement>`
+
+### **CardTitle**
+
+Component for displaying the card's title.
+
+- **Props**: Inherits from `React.HTMLAttributes<HTMLHeadingElement>`
+
+### **CardDescription**
+
+Component for displaying the card's description, typically under the title.
+
+- **Props**: Inherits from `React.HTMLAttributes<HTMLParagraphElement>`
+
+### **CardContent**
+
+The main content area of the card.
+
+- **Props**: Inherits from `React.HTMLAttributes<HTMLDivElement>`
+
+### **CardFooter**
+
+Wrapper for the card's footer, typically used for actions like buttons.
+
+- **Props**: Inherits from `React.HTMLAttributes<HTMLDivElement>`
+
+---
+
+## **Example: Card with Custom Content**
+
+```tsx
+<Card className="max-w-sm shadow-lg">
+  <CardHeader>
+    <CardTitle>Product Name</CardTitle>
+    <CardDescription>Short description of the product</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p>Additional details about the product go here.</p>
+  </CardContent>
+  <CardFooter>
+    <button className="btn-primary">Buy Now</button>
+  </CardFooter>
+</Card>
+
+```
+
+This example demonstrates how to create a simple card with a title, description, content, and a footer with an action button.
+
+---
+
+## **Customization**
+
+Each component can be customized with the `className` prop, allowing you to adjust the styles as needed.
+
+### **Example: Custom Styles**
+
+```tsx
+<Card className="border-primary bg-secondary">
+  <CardHeader className="text-primary">
+    <CardTitle className="text-lg">Custom Card</CardTitle>
+    <CardDescription>Custom description text</CardDescription>
+  </CardHeader>
+  <CardContent className="text-contrast">
+    <p>This card has custom colors and styles applied to it.</p>
+  </CardContent>
+  <CardFooter className="justify-end">
+    <button className="btn-primary">Custom Action</button>
+  </CardFooter>
+</Card>
+
+```
+
+This example customizes the card's border, background, text colors, and layout, demonstrating how flexible the component is.

@@ -1,0 +1,199 @@
+---
+title: 'ContextMenu'
+description: ''
+---
+## **Overview**
+
+The `ContextMenu` component is a customizable and accessible right-click context menu built using `@radix-ui/react-context-menu`. It supports various menu items such as checkboxes, radio buttons, labels, and separators. The component also supports submenus and keyboard shortcuts.
+
+## **Usage**
+
+```tsx
+import {
+  ContextMenu,
+  ContextMenuTrigger,
+  ContextMenuItem,
+  ContextMenuGroup,
+  ContextMenuContent,
+  ContextMenuCheckboxItem,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
+  ContextMenuSeparator,
+} from '@/src/app/ui/context-menu';
+
+function MyComponent() {
+  return (
+    <ContextMenu>
+      <ContextMenuTrigger>
+        <button className="p-4">Right-click me</button>
+      </ContextMenuTrigger>
+
+      <ContextMenuContent>
+        <ContextMenuGroup>
+          <ContextMenuItem>Action 1</ContextMenuItem>
+          <ContextMenuItem>Action 2</ContextMenuItem>
+        </ContextMenuGroup>
+        <ContextMenuSeparator />
+        <ContextMenuCheckboxItem checked={true}>Checkbox Item</ContextMenuCheckboxItem>
+        <ContextMenuSeparator />
+        <ContextMenuRadioGroup>
+          <ContextMenuRadioItem value="option-1">Option 1</ContextMenuRadioItem>
+          <ContextMenuRadioItem value="option-2">Option 2</ContextMenuRadioItem>
+        </ContextMenuRadioGroup>
+      </ContextMenuContent>
+    </ContextMenu>
+  );
+}
+
+```
+
+## **API**
+
+### **ContextMenu**
+
+The root component for the context menu.
+
+- **Props**: Inherits from `ContextMenuPrimitive.Root`.
+
+---
+
+### **ContextMenuTrigger**
+
+Defines the element that triggers the context menu on right-click.
+
+- **Props**: Inherits from `ContextMenuPrimitive.Trigger`.
+
+---
+
+### **ContextMenuContent**
+
+The container for the context menu items. This appears when the trigger is activated.
+
+- **Props**: Inherits from `ContextMenuPrimitive.Content`.
+
+---
+
+### **ContextMenuGroup**
+
+A wrapper to group related context menu items together.
+
+- **Props**: Inherits from `ContextMenuPrimitive.Group`.
+
+---
+
+### **ContextMenuItem**
+
+An individual item inside the context menu.
+
+- **Props**:
+    - **`inset?`**: `boolean`
+    Adds extra padding to the item for alignment.
+    - Inherits from `ContextMenuPrimitive.Item`.
+
+---
+
+### **ContextMenuCheckboxItem**
+
+A checkbox item inside the context menu.
+
+- **Props**:
+    - **`checked`**: `boolean`
+    The checked state of the checkbox.
+    - Inherits from `ContextMenuPrimitive.CheckboxItem`.
+
+---
+
+### **ContextMenuRadioGroup**
+
+A container for grouping radio items inside the context menu.
+
+- **Props**: Inherits from `ContextMenuPrimitive.RadioGroup`.
+
+---
+
+### **ContextMenuRadioItem**
+
+A radio item inside the context menu.
+
+- **Props**:
+    - **`value`**: `string`
+    The value of the radio item.
+    - Inherits from `ContextMenuPrimitive.RadioItem`.
+
+---
+
+### **ContextMenuLabel**
+
+A label inside the context menu to describe a group of items.
+
+- **Props**: Inherits from `ContextMenuPrimitive.Label`.
+
+---
+
+### **ContextMenuSeparator**
+
+A separator that divides sections inside the context menu.
+
+- **Props**: Inherits from `ContextMenuPrimitive.Separator`.
+
+---
+
+### **ContextMenuShortcut**
+
+Displays a keyboard shortcut next to a menu item.
+
+- **Props**: Inherits from `React.HTMLAttributes<HTMLSpanElement>`.
+
+---
+
+### **ContextMenuSub**
+
+Defines a submenu that can be nested within the main context menu.
+
+- **Props**: Inherits from `ContextMenuPrimitive.Sub`.
+
+---
+
+### **ContextMenuSubTrigger**
+
+The trigger for a submenu. It shows an icon indicating that there is a nested submenu.
+
+- **Props**:
+    - **`inset?`**: `boolean`
+    Adds extra padding to the item for alignment.
+    - Inherits from `ContextMenuPrimitive.SubTrigger`.
+
+---
+
+### **ContextMenuSubContent**
+
+The container for submenu items that appear when the submenu trigger is activated.
+
+- **Props**: Inherits from `ContextMenuPrimitive.SubContent`.
+
+---
+
+## **Example: Context Menu with Submenu**
+
+```tsx
+<ContextMenu>
+  <ContextMenuTrigger>
+    <button className="p-4">Right-click me</button>
+  </ContextMenuTrigger>
+
+  <ContextMenuContent>
+    <ContextMenuItem>Action 1</ContextMenuItem>
+    <ContextMenuSeparator />
+    <ContextMenuSub>
+      <ContextMenuSubTrigger inset>More Options</ContextMenuSubTrigger>
+      <ContextMenuSubContent>
+        <ContextMenuItem>Sub Action 1</ContextMenuItem>
+        <ContextMenuItem>Sub Action 2</ContextMenuItem>
+      </ContextMenuSubContent>
+    </ContextMenuSub>
+  </ContextMenuContent>
+</ContextMenu>
+
+```
+
+In this example, a submenu is added with a trigger that shows more options when hovered over.

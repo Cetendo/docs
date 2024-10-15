@@ -1,0 +1,150 @@
+---
+title: 'AsyncSearch'
+description: ''
+---
+## **Overview**
+
+The `AsyncSearch` component is a generic React component that provides a popover search interface for selecting items dynamically loaded from an asynchronous data source. It supports pagination, keyboard navigation, and optionally shows a hover card with additional information for each item.
+
+## **Usage**
+
+```tsx
+import { AsyncSearch } from '@/src/app/ui/async-search';
+
+function MyComponent() {
+  const fetchData = async (value: string, page: number) => {
+    // Fetch data based on the search value and page
+  };
+
+  const handleSelect = (item: { id: string }) => {
+    console.log("Selected item:", item);
+  };
+
+  return (
+    <AsyncSearch
+      placeholder="Search items"
+      fetchData={fetchData}
+      onSelect={handleSelect}
+      totalPages={5}
+      searchValue={(item) => item.id}
+      itemComponent={(item) => <div>{item.id}</div>}
+      initialValuesEmptyState={() => <div>No initial values</div>}
+      queryKeys={['search']}
+    />
+  );
+}
+
+```
+
+## **API**
+
+### **Props**
+
+- **`trigger?`**: `JSX.Element`
+    
+    The element that triggers the search popover. If not provided, the component handles the trigger internally.
+    
+- **`openWithShortcut?`**: `boolean`
+    
+    If true, the search popover can be opened using a keyboard shortcut (`Cmd + J`). Defaults to `false`.
+    
+- **`placeholder`**: `string`
+    
+    The placeholder text for the search input.
+    
+- **`noDataMessage?`**: `string`
+    
+    The message displayed when there are no search results. Defaults to `"general.empty"`.
+    
+- **`side?`**: `"left" | "right" | "top" | "bottom"`
+    
+    Specifies the position of the popover relative to the trigger element. Defaults to `"left"`.
+    
+- **`totalPages`**: `number`
+    
+    The total number of pages available for paginated data.
+    
+- **`fetchData`**: `(value: string, page: number) => Promise<T[]>`
+    
+    Function to fetch the list of items based on the search input and current page.
+    
+- **`onSelect`**: `(item: T) => void`
+    
+    Function to handle the selection of an item from the list.
+    
+- **`searchValue`**: `(item: T) => string`
+    
+    Function to determine the searchable value for each item.
+    
+- **`itemComponent`**: `(item: T) => JSX.Element`
+    
+    Component used to render each item in the search results.
+    
+- **`filter?`**: `(item: T) => boolean`
+    
+    Optional filter function to filter the displayed items.
+    
+- **`open?`**: `boolean`
+    
+    Controlled state of the popover's open status.
+    
+- **`setOpen?`**: `(open: boolean) => void`
+    
+    Function to control the open status of the popover.
+    
+- **`initialValues?`**: `T[]`
+    
+    Initial values to be displayed when no search term is entered.
+    
+- **`initialValuesLoading?`**: `boolean`
+    
+    Whether the initial values are loading.
+    
+- **`initialValuesEmptyState`**: `() => JSX.Element`
+    
+    Component to display when there are no initial values.
+    
+- **`queryKeys`**: `string[]`
+    
+    The keys used for caching and re-fetching the data in `react-query`.
+    
+- **`renderHoverCard?`**: `boolean`
+    
+    If true, enables the hover card feature for displaying additional information about the items.
+    
+- **`hoverCard?`**: `(item: T) => JSX.Element | null`
+    
+    Function to render the hover card for an item.
+    
+
+---
+
+## **Features**
+
+- **Debounced Search**: The search input is debounced to avoid triggering multiple requests rapidly as the user types.
+- **Pagination**: Supports paginated data loading, with a "Load More" button for fetching more items.
+- **Keyboard Shortcut**: Optionally supports opening the popover using `Cmd + J`.
+- **Hover Card**: Optionally displays a hover card with additional item details.
+- **Customizable Components**: Allows full customization of the displayed items and how they are rendered.
+
+---
+
+## **Example: Using Hover Card**
+
+```tsx
+<AsyncSearch
+  placeholder="Search items"
+  fetchData={fetchData}
+  onSelect={handleSelect}
+  totalPages={3}
+  searchValue={(item) => item.id}
+  itemComponent={(item) => <div>{item.id}</div>}
+  hoverCard={(item) => <div>Details for {item.id}</div>}
+  renderHoverCard={true}
+  initialValuesEmptyState={() => <div>No items available</div>}
+  queryKeys={['search']}
+/>
+
+```
+
+In this example, the hover card is enabled to display additional details for each item when hovered.

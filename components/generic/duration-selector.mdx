@@ -1,0 +1,126 @@
+---
+title: 'DurationSelector'
+description: ''
+---
+## Overview
+
+The `DurationSelector` component provides a way to select a duration (in minutes) using an `AsyncSelect` dropdown. It includes preset durations, as well as support for custom input, allowing users to specify hours and minutes in different formats.
+
+## Usage
+
+```tsx
+import DurationSelector from '@/src/app/components/duration-selector';
+
+function MyComponent() {
+  const [duration, setDuration] = useState(60);
+
+  return (
+    <DurationSelector value={duration} onChange={setDuration}>
+      <button>Choose Duration</button>
+    </DurationSelector>
+  );
+}
+
+```
+
+## API
+
+### Props
+
+- **`value: number`**
+    
+    The selected duration in minutes.
+    
+- **`onChange: (value: number) => void`**
+    
+    Callback function that is triggered when a new duration is selected.
+    
+- **`children?: React.ReactNode`**
+    
+    Optional custom trigger for the dropdown. If not provided, a default button will be used.
+    
+
+## Features
+
+1. **Preset Durations**: Includes predefined durations like 15, 30, 60, 120 minutes, etc.
+2. **Custom Input**: Allows users to enter durations manually in minutes or in "hours minutes" format.
+3. **Dynamic Search**: Filters the available durations based on user input.
+4. **Language Support**: Formats durations based on the user's language (e.g., "hours" in English, "Stunden" in German).
+5. **Limit on Maximum Duration**: If a duration exceeds 1440 minutes (24 hours), it will be capped at 1440.
+
+---
+
+### Example: Custom Trigger
+
+```tsx
+<DurationSelector value={duration} onChange={setDuration}>
+  <button className="custom-trigger">Pick a Duration</button>
+</DurationSelector>
+
+```
+
+In this example, the custom button will act as the trigger for opening the `AsyncSelect` dropdown.
+
+---
+
+### Placeholder Durations
+
+The component includes preset durations such as 15 minutes, 1 hour, 2 hours, etc., which are generated based on the user's language:
+
+```
+const placeholderDurations = [
+  { label: formatPlaceholderDuration(15), value: 15 },
+  { label: formatPlaceholderDuration(30), value: 30 },
+  { label: formatPlaceholderDuration(60), value: 60 },
+  { label: formatPlaceholderDuration(120), value: 120 },
+];
+
+```
+
+These durations are displayed by default when the component is initialized.
+
+---
+
+### Dynamic Formatting Based on Language
+
+The `formatDuration` and `formatPlaceholderDuration` functions automatically adjust the duration labels based on the user's language:
+
+```
+const formatDuration = (hours, minutes) => {
+  const hoursText = hours ? `${hours} ${hours === 1 ? "hour" : "hours"}` : "";
+  const minutesText = minutes ? `${minutes} min` : "";
+  return `${hoursText} ${minutesText}`.trim();
+};
+
+```
+
+This ensures that durations are presented in a format that matches the user's locale.
+
+---
+
+### Search Input and Filtering
+
+The component supports custom search queries, allowing users to type specific durations. For instance, typing "1 30" will return both "1 hour 30 minutes" and "90 minutes":
+
+```
+const fetchDurations = async (): Promise<DurationItem[]> => {
+  if (!searchTerm) {
+    return placeholderDurations;
+  }
+
+  // Handle search term and filter durations accordingly
+  if (!isNaN(parseInt(searchTerm, 10)) || searchTerm.includes(" ")) {
+    return convertInputToDuration(searchTerm);
+  }
+
+  const searchLower = searchTerm.toLowerCase();
+  return durations.filter((duration) =>
+    duration.label.toLowerCase().startsWith(searchLower),
+  );
+};
+
+```
+
+---
+
+This component provides a flexible, multilingual way to select durations with search and custom input support, making it suitable for scheduling and appointment-related interfaces.

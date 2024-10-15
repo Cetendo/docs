@@ -1,0 +1,150 @@
+---
+title: 'Carousel'
+description: ''
+---
+## **Overview**
+
+The `Carousel` component is a flexible and responsive carousel built using the `embla-carousel-react` library. It allows for horizontal or vertical scrolling of content with custom previous/next buttons. The carousel supports keyboard navigation and can be customized with different carousel options, plugins, and custom content.
+
+## **Usage**
+
+```tsx
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from '@/src/app/ui/carousel';
+
+function MyCarousel() {
+  return (
+    <Carousel>
+      <CarouselPrevious />
+      <CarouselContent>
+        <CarouselItem>
+          <div className="bg-gray-200 p-4">Slide 1</div>
+        </CarouselItem>
+        <CarouselItem>
+          <div className="bg-gray-300 p-4">Slide 2</div>
+        </CarouselItem>
+        <CarouselItem>
+          <div className="bg-gray-400 p-4">Slide 3</div>
+        </CarouselItem>
+      </CarouselContent>
+      <CarouselNext />
+    </Carousel>
+  );
+}
+
+```
+
+## **API**
+
+### **Carousel**
+
+The main wrapper component for the carousel. It initializes and manages the carousel state and context.
+
+- **Props**:
+    - **`opts?`**: `CarouselOptions`
+    Configuration options for the `embla-carousel`.
+    - **`plugins?`**: `CarouselPlugin[]`
+    Array of plugins to enhance the carousel behavior.
+    - **`orientation?`**: `"horizontal" | "vertical"`
+    Sets the carousel's scrolling direction. Defaults to `"horizontal"`.
+    - **`setApi?`**: `(api: CarouselApi) => void`
+    Function to access the carousel API.
+    - **`className?`**: `string`
+    Additional CSS class for the carousel container.
+
+---
+
+### **CarouselContent**
+
+The container for the carousel items. It is responsible for laying out the items and ensuring that they are scrollable within the carousel.
+
+- **Props**: Inherits from `React.HTMLAttributes<HTMLDivElement>`
+
+---
+
+### **CarouselItem**
+
+Each individual slide inside the carousel.
+
+- **Props**: Inherits from `React.HTMLAttributes<HTMLDivElement>`
+
+---
+
+### **CarouselPrevious**
+
+The button for scrolling to the previous slide. It disables itself when there are no previous slides to scroll to.
+
+- **Props**: Inherits from `Button`
+
+---
+
+### **CarouselNext**
+
+The button for scrolling to the next slide. It disables itself when there are no more slides to scroll to.
+
+- **Props**: Inherits from `Button`
+
+---
+
+## **Features**
+
+- **Horizontal/Vertical Orientation**: Supports both horizontal and vertical scrolling for the carousel.
+- **Keyboard Navigation**: Allows users to navigate the carousel using the left and right arrow keys.
+- **Custom Previous/Next Buttons**: The `CarouselPrevious` and `CarouselNext` components are customizable and use icons for navigation.
+- **Embla Carousel Plugins**: Supports plugins to extend the functionality of the carousel.
+- **Responsive Layout**: The carousel adapts to different screen sizes and layouts.
+
+---
+
+## **Example: Vertical Carousel**
+
+```tsx
+<Carousel orientation="vertical">
+  <CarouselPrevious />
+  <CarouselContent>
+    <CarouselItem>
+      <div className="bg-gray-200 p-4">Slide 1</div>
+    </CarouselItem>
+    <CarouselItem>
+      <div className="bg-gray-300 p-4">Slide 2</div>
+    </CarouselItem>
+    <CarouselItem>
+      <div className="bg-gray-400 p-4">Slide 3</div>
+    </CarouselItem>
+  </CarouselContent>
+  <CarouselNext />
+</Carousel>
+
+```
+
+This example shows a vertical carousel with custom content for each slide.
+
+---
+
+## **Example: Using Carousel Plugins**
+
+```tsx
+<Carousel plugins={[Autoplay({ delay: 3000 })]}>
+  <CarouselPrevious />
+  <CarouselContent>
+    <CarouselItem>
+      <div className="bg-gray-200 p-4">Slide 1</div>
+    </CarouselItem>
+    <CarouselItem>
+      <div className="bg-gray-300 p-4">Slide 2</div>
+    </CarouselItem>
+    <CarouselItem>
+      <div className="bg-gray-400 p-4">Slide 3</div>
+    </CarouselItem>
+  </CarouselContent>
+  <CarouselNext />
+</Carousel>
+
+```
+
+This example demonstrates how to use the `Autoplay` plugin to automatically cycle through slides.

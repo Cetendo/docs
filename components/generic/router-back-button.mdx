@@ -1,0 +1,54 @@
+---
+title: 'RouterBackButton'
+description: ''
+---
+## Overview
+
+The `RouterBackButton` component is a specialized button designed to navigate back in the browser history when clicked. It extends the functionality of our standard [Button](https://www.notion.so/Button-1112946d7033804894aae190bc6633bf?pvs=21)  component by predefining the `onClick` event to trigger the `router.back()` method from Next.js.
+
+## Usage
+
+The `RouterBackButton` is used similarly to our standard `Button` component but is specifically tailored for navigation purposes. It simplifies the process of adding a back button to your application by encapsulating the `onClick` logic.
+
+### Props
+
+- `className` (optional): Custom CSS classes to style the button.
+- `buttonProps`: Props to customize the button's appearance and behavior, derived from `buttonVariants`.
+- `children` (optional): The content to be displayed inside the button.
+
+### Example 1: Basic Usage
+
+```tsx
+import { RouterBackButton } from "@/components/router-back-button";
+
+const MyComponent = () => (
+  <RouterBackButton variant="default" size="default">
+    Go Back
+  </RouterBackButton>
+);
+
+```
+
+### Example 2: Custom Styling
+
+```tsx
+import { RouterBackButton } from "@/components/router-back-button";
+
+const MyComponent = () => (
+  <RouterBackButton
+    className="custom-class"
+    variant="cta" 
+    size="lg"
+  >
+    Back to Previous Page
+  </RouterBackButton>
+);
+
+```
+
+## Notes
+
+- The `RouterBackButton` is a convenient way to implement a back navigation button without manually handling the `onClick` event.
+- It leverages the `useRouter` hook from Next.js to navigate back in the browser history.
+
+For more details on the `Button` component and its variants, refer to the `button.tsx` documentation.

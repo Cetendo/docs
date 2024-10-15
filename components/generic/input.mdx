@@ -1,0 +1,85 @@
+---
+title: 'Input'
+description: ''
+---
+## **Overview**
+
+The `Input` component is a reusable and customizable input field built with React and `clsx` for conditional class management. It provides a consistent style and supports various input types (e.g., `text`, `email`, `password`, etc.), with options for custom styling and handling disabled states.
+
+## **Usage**
+
+```tsx
+import { Input } from '@/src/app/ui/input';
+
+function MyComponent() {
+  return (
+    <div>
+      <label htmlFor="username">Username</label>
+      <Input id="username" type="text" placeholder="Enter your username" />
+    </div>
+  );
+}
+
+```
+
+## **API**
+
+### **Props**
+
+- **`type?`**: `string` - Defines the input type (e.g., `text`, `email`, `password`, etc.). Defaults to `"text"`.
+- **`className?`**: `string` - Allows for additional custom styling via class names.
+- **`...props`**: `React.InputHTMLAttributes<HTMLInputElement>` - All standard input attributes can be passed (e.g., `placeholder`, `disabled`, `value`, `onChange`, etc.).
+
+### **Ref Support**
+
+The `Input` component uses `React.forwardRef` to forward a `ref` to the underlying `<input>` element, making it suitable for situations where you need direct access to the input element.
+
+---
+
+## **Example: Input with Placeholder**
+
+```tsx
+function ExampleInput() {
+  return (
+    <Input type="text" placeholder="Enter your name" className="mb-4" />
+  );
+}
+
+```
+
+---
+
+## **Styling**
+
+The `Input` component is pre-styled with:
+
+- **Dimensions**: `h-8 w-full` ensures the input is 8 units tall and takes the full width of the container.
+- **Rounded corners**: `rounded-md` applies a medium border-radius for smooth edges.
+- **Border**: A slightly transparent border `border-border/50` that changes to `focus:!border-primary` when the input is focused.
+- **Background & text**: The input uses `bg-foreground` for the background, and `text-contrast` for the text color.
+- **Placeholder**: Styled with `placeholder:text-muted` to ensure the placeholder text is less prominent.
+- **Disabled state**: The input becomes semi-transparent and the cursor changes when disabled, using `disabled:cursor-not-allowed disabled:opacity-50`.
+
+---
+
+## **Example: Disabled Input**
+
+```tsx
+<Input type="text" placeholder="Disabled input" disabled />
+
+```
+
+In this example, the input is disabled, meaning it will not accept user input and has a grayed-out appearance.
+
+---
+
+## **Customizing Styles**
+
+You can pass additional classes via the `className` prop to customize the input further:
+
+```tsx
+<Input className="bg-light-gray text-dark-gray border-accent" />
+
+```
+
+This overrides the default background, text, and border color with custom styles.

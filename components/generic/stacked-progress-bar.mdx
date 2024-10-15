@@ -1,0 +1,74 @@
+---
+title: 'StackedProgressBar'
+description: ''
+---
+![CleanShot 2024-08-28 at 18.15.10.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/6c287c3f-0b82-488b-bc08-312929473139/2730674f-34e9-4fed-8abd-9f492147888c/CleanShot_2024-08-28_at_18.15.10.png)
+
+**Why You Should Use It:** This component is a game-changer because it's ridiculously easy to use, highly customizable, and makes your data look like a million bucks. Plus, it's got built-in support for loading and error states, so you can focus on the fun stuff.
+
+## **Props:**
+
+### DefaultStackedProgressBarProps
+
+- `state`: The state of the progress bar (default, loading, or error)
+- `total`: The total value of the progress bar
+- `categories`: An array of objects containing the value, color, and title of each category
+- `showTooltipOnCategories`: Whether to show tooltips on hover for each category
+- `showLegend`: Whether to show a legend below the progress bar
+- `className`: Additional classes to apply to the progress bar
+- `children`: Any additional content to render inside the progress bar
+- `categoryChildren`: Any additional content to render inside each category
+
+### LoadingStackedProgressBarProps
+
+- `state`: The state of the progress bar (loading)
+
+### ErrorStackedProgressBarProps
+
+- `state`: The state of the progress bar (error)
+
+**Example Usage:**
+
+```jsx
+import StackedProgressBar from './StackedProgressBar';
+
+const data = [
+  { value: 30, color: 'blue', title: 'Category 1' },
+  { value: 20, color: 'green', title: 'Category 2' },
+  { value: 50, color: 'yellow', title: 'Category 3' },
+];
+
+const App = () => {
+  return (
+    <StackedProgressBar
+      total={100}
+      categories={data}
+      showTooltipOnCategories
+      showLegend
+    />
+  );
+};
+
+```
+
+Or, if you want to get fancy:
+
+```jsx
+const App = () => {
+  return (
+    <StackedProgressBar
+      total={100}
+      categories={data}
+      showTooltipOnCategories
+      showLegend
+      className="my-4"
+      categoryChildren={<div>Custom category content</div>}
+    >
+      <div>Custom progress bar content</div>
+    </StackedProgressBar>
+  );
+};
+
+```
+
+That's it! With our StackedProgressBar component, you can create stunning, interactive progress bars in no time.

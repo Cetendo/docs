@@ -1,0 +1,136 @@
+---
+title: 'FormLayout'
+description: ''
+---
+To make forms unified across our Platform we build this layout to streamline how forms look.
+
+## How it Works
+
+The FormLayout component is a wrapper that uses grid to create a responsive, three-column layout for your form elements. It's ridiculously customizable, with a slew of props that let you fine-tune everything from label alignment to description placement. And the best part? It's designed to be modular, so you can mix and match different components to create the perfect form for your needs.
+
+### FormLayout
+
+- `children`: The form elements to be rendered within the layout.
+- `className`: An optional class name to add to the layout container.
+
+### Item
+
+- `label`: The text to display as the label for the form element.
+- `description`: An optional description to display as a tooltip or below the children.
+- `extraInfo`: An optional string to display as secondary text below the label.
+- `labelBold`: A boolean indicating whether the label should be displayed in bold.
+- `children`: The form element(s) to be rendered within the item.
+- `align`: The alignment of the label (top, center, or bottom).
+- `descriptionLocation`: Where to display the description (`tooltip` or `below-children`).
+
+### SettingsSection, SettingsItem, ButtonSection, and FullWidthItem
+
+These components are all variations of the FormLayout component, with different default styles and layouts. They can be used to create different sections within your form.
+
+## Examples
+
+### Simple Form
+
+```html
+<FormLayout>
+  <FormLayout.Item label="Name">
+    <Input type="text" />
+  </FormLayout.Item>
+  <FormLayout.Item label="Email">
+    <Input type="email" />
+  </FormLayout.Item>
+</FormLayout>
+
+```
+
+### Form with Descriptions
+
+```tsx
+<FormLayout>
+  <FormLayout.Item label="Name" description="Your full name">
+    <input type="text" />
+  </FormLayout.Item>
+  <FormLayout.Item label="Email" description="Your email address">
+    <input type="email" />
+  </FormLayout.Item>
+</FormLayout>
+
+```
+
+With the FormLayout component, the possibilities are endless! So go ahead, get creative, and build some forms that will make users swoon.
+
+### Form with Different Alignments and Descriptions
+
+```
+<FormLayout>
+  <FormLayout.Item 
+    label="Username" 
+    description="Enter your preferred username"
+    align="top"
+    descriptionLocation="tooltip"
+  >
+    <input type="text" />
+  </FormLayout.Item>
+  <FormLayout.Item 
+    label="Password" 
+    description="Must be at least 8 characters long"
+    align="center"
+    descriptionLocation="below-children"
+  >
+    <input type="password" />
+  </FormLayout.Item>
+  <FormLayout.Item 
+    label="Bio" 
+    description="Tell us about yourself"
+    align="bottom"
+    labelBold={true}
+  >
+    <textarea rows="3" />
+  </FormLayout.Item>
+</FormLayout>
+```
+
+### Form with Settings Section
+
+```
+<FormLayout>
+  <FormLayout.SettingsSection title="Account Settings">
+    <FormLayout.Item label="Display Name">
+      <input type="text" />
+    </FormLayout.Item>
+    <FormLayout.Item label="Email Notifications">
+      <input type="checkbox" />
+    </FormLayout.Item>
+  </FormLayout.SettingsSection>
+  
+  <FormLayout.SettingsSection title="Privacy Settings">
+    <FormLayout.Item label="Profile Visibility">
+      <select>
+        <option>Public</option>
+        <option>Private</option>
+        <option>Friends Only</option>
+      </select>
+    </FormLayout.Item>
+  </FormLayout.SettingsSection>
+</FormLayout>
+```
+
+### Form with Button Section
+
+```
+<FormLayout>
+  <FormLayout.Item label="Full Name">
+    <input type="text" />
+  </FormLayout.Item>
+  <FormLayout.Item label="Email">
+    <input type="email" />
+  </FormLayout.Item>
+  
+  <FormLayout.ButtonSection>
+    <button type="submit">Save Changes</button>
+    <button type="button">Cancel</button>
+  </FormLayout.ButtonSection>
+</FormLayout>
+```
+
+These examples showcase different ways to use the FormLayout component, including various alignment options, description placements, and specialized sections like SettingsSection and ButtonSection. The FormLayout component's flexibility allows you to create complex, responsive forms with ease.

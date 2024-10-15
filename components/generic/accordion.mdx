@@ -1,0 +1,104 @@
+---
+title: 'Accordion'
+description: ''
+---
+## **Overview**
+
+This set of components leverages the `@radix-ui/react-accordion` primitive to create a fully customizable, accessible, and reusable accordion UI. The accordion includes features like collapsible sections, smooth animations, and an interactive trigger icon using the `ChevronDownIcon`.
+
+## **Usage**
+
+```tsx
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/src/app/ui/accordion';
+
+function FAQSection() {
+  return (
+    <Accordion type="single" collapsible>
+      <AccordionItem value="item-1">
+        <AccordionTrigger>What is your return policy?</AccordionTrigger>
+        <AccordionContent>
+          <p>Our return policy lasts 30 days...</p>
+        </AccordionContent>
+      </AccordionItem>
+
+      <AccordionItem value="item-2">
+        <AccordionTrigger>How do I track my order?</AccordionTrigger>
+        <AccordionContent>
+          <p>You can track your order by...</p>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  );
+}
+
+```
+
+## **API**
+
+### **Accordion**
+
+The `Accordion` component wraps all the items and controls how many sections can be open simultaneously.
+
+- **Props**:
+    - `type`: `"single"` | `"multiple"` - Defines if one or multiple items can be open at the same time.
+    - `collapsible?`: `boolean` - Allows all items to be collapsed. Useful for single-type accordions.
+
+---
+
+### **AccordionItem**
+
+The `AccordionItem` represents each collapsible section within the accordion.
+
+- **Props**:
+    - `value`: `string` - A unique value that identifies the item, required for controlling the open/close state.
+
+---
+
+### **AccordionTrigger**
+
+The `AccordionTrigger` acts as the clickable header that expands/collapses the associated content. It also displays a `ChevronDownIcon` that rotates based on the open/close state.
+
+- **Props**:
+    - `children`: `React.ReactNode` - The content of the trigger, typically the title or question.
+    - `className?`: `string` - Additional styles for the trigger.
+
+---
+
+### **AccordionContent**
+
+The `AccordionContent` holds the content revealed when the `AccordionTrigger` is activated.
+
+- **Props**:
+    - `children`: `React.ReactNode` - The content to be displayed when the accordion item is open.
+    - `className?`: `string` - Additional styles for the content.
+
+---
+
+## **Animations**
+
+The accordion supports smooth animations for the content:
+
+- **Opening animation**: Defined by the `data-[state=open]:animate-accordion-down` class.
+- **Closing animation**: Defined by the `data-[state=closed]:animate-accordion-up` class.
+
+These classes allow for CSS animations that trigger when the accordion opens and closes.
+
+## **Example: Customized Accordion**
+
+```tsx
+function CustomAccordion() {
+  return (
+    <Accordion type="multiple">
+      <AccordionItem value="custom-1">
+        <AccordionTrigger className="text-lg font-bold">Custom Header</AccordionTrigger>
+        <AccordionContent className="bg-gray-100 text-gray-800">
+          <p>This is custom content inside an accordion.</p>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  );
+}
+
+```
+
+In this example, the accordion's trigger and content have custom styles, demonstrating the flexibility of the component with `clsx` for conditional styling.

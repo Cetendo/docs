@@ -1,0 +1,166 @@
+---
+title: 'AsyncTagSelect'
+description: ''
+---
+## **Overview**
+
+The `AsyncTagSelect` component is a customizable tag input component that allows users to search for and select items from an asynchronous data source. Selected items are displayed as tags that can be removed. It supports fetching data on demand, custom rendering of items, and full control over tag management.
+
+## **Usage**
+
+```tsx
+import { AsyncTagSelect } from '@/src/app/ui/async-tag-select';
+
+function MyComponent() {
+  const fetchTags = async () => {
+    // Simulate async fetching of data
+    return [{ id: '1', name: 'Tag 1' }, { id: '2', name: 'Tag 2' }];
+  };
+
+  const handleSelect = (tag) => {
+    console.log('Selected tag:', tag);
+  };
+
+  const handleRemove = (tag) => {
+    console.log('Removed tag:', tag);
+  };
+
+  const tagComponent = (tag) => <div>{tag.name}</div>;
+
+  return (
+    <AsyncTagSelect
+      placeholder="Search for tags..."
+      placeholderWithTags="Add another tag"
+      fetchData={fetchTags}
+      onSelect={handleSelect}
+      onRemove={handleRemove}
+      searchValue={(tag) => tag.id}
+      itemComponent={tagComponent}
+      tagComponent={tagComponent}
+      queryKeys={['tags']}
+      onItemsFetched={(items) => items} // Optional: Process fetched items if needed
+    />
+  );
+}
+
+```
+
+## **API**
+
+### **Props**
+
+- **`placeholder`**: `string`
+    
+    Placeholder text for the search input when there are no tags selected.
+    
+- **`placeholderWithTags`**: `string`
+    
+    Placeholder text for the search input when tags are already selected.
+    
+- **`noDataMessageTitle?`**: `string`
+    
+    Message to display when there is no data available (optional).
+    
+- **`noDataMessageDescription?`**: `string`
+    
+    Additional description when no data is available (optional).
+    
+- **`fetchData`**: `() => Promise<TagWithRemove<T>[]>`
+    
+    The function to fetch items asynchronously.
+    
+- **`onSelect`**: `(item: T) => void`
+    
+    Function to handle the selection of an item.
+    
+- **`searchValue`**: `(item: T) => string`
+    
+    Function to get the searchable value for each item.
+    
+- **`itemComponent`**: `(item: T) => JSX.Element`
+    
+    The component used to render each item in the search results.
+    
+- **`filter?`**: `(item: T) => boolean`
+    
+    Optional filter function to filter the items in the list.
+    
+- **`emptyState?`**: `React.ReactNode`
+    
+    Custom component to display when there are no search results.
+    
+- **`onRemove`**: `(item: T) => void`
+    
+    Function to handle removing a tag.
+    
+- **`tagComponent`**: `(item: T) => JSX.Element`
+    
+    The component used to render each selected tag.
+    
+- **`queryKeys`**: `string[]`
+    
+    Keys used for caching and re-fetching the data in `react-query`.
+    
+- **`onItemsFetched`**: `(items: TagWithRemove<T>[]) => TagWithRemove<T>[]`
+    
+    Function to process items after they are fetched (optional).
+    
+
+---
+
+## **Features**
+
+- **Tag Input with Async Search**: Users can search for and select items asynchronously, which are displayed as removable tags.
+- **Customizable Tags**: Custom components can be used to render both the selected tags and the search results.
+- **Keyboard Navigation**: Full support for keyboard interaction, including backspace to remove the last tag.
+- **Filtering**: Optional filtering of items can be applied to refine the search results.
+- **Loading State**: Displays a skeleton loader while fetching data.
+
+---
+
+## **Example: Customizing Empty State**
+
+```tsx
+<AsyncTagSelect
+  placeholder="Search for users..."
+  placeholderWithTags="Add another user"
+  fetchData={fetchTags}
+  onSelect={handleSelect}
+  onRemove={handleRemove}
+  searchValue={(tag) => tag.id}
+  itemComponent={(tag) => <div>{tag.name}</div>}
+  tagComponent={(tag) => <div>{tag.name}</div>}
+  queryKeys={['users']}
+  emptyState={<div>No users found</div>}
+/>
+
+```
+
+In this example, a custom empty state is provided to display when no search results are available.
+
+---
+
+## **Example: Disabling Tag Removal**
+
+```tsx
+const fetchTags = async () => {
+  return [
+    { id: '1', name: 'Tag 1', disableRemove: true },
+    { id: '2', name: 'Tag 2' },
+  ];
+};
+
+<AsyncTagSelect
+  placeholder="Search for tags..."
+  fetchData={fetchTags}
+  onSelect={handleSelect}
+  onRemove={handleRemove}
+  searchValue={(tag) => tag.id}
+  itemComponent={(tag) => <div>{tag.name}</div>}
+  tagComponent={(tag) => <div>{tag.name}</div>}
+  queryKeys={['tags']}
+/>
+
+```
+
+In this example, one of the tags (`Tag 1`) cannot be removed as its `disableRemove` property is set to `true`.

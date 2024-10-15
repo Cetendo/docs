@@ -1,0 +1,137 @@
+---
+title: 'Button'
+description: ''
+---
+## **Overview**
+
+The `Button` component is a flexible and reusable button element that supports various styles, sizes, and keyboard shortcuts. It can be used as a regular button, a link, or a custom component with different variants and states. The button also has optional support for displaying keyboard shortcut hints using the `KbdButton` component.
+
+## **Usage**
+
+```tsx
+import { Button } from '@/src/app/ui/button';
+
+function MyComponent() {
+  return (
+    <div>
+      <Button variant="default" size="default">
+        Default Button
+      </Button>
+      <Button variant="cta" size="lg" kbd="cmd+s">
+        Save (Cmd+S)
+      </Button>
+      <Button href="/about" variant="link">
+        Go to About Page
+      </Button>
+    </div>
+  );
+}
+
+```
+
+## **API**
+
+### **Props**
+
+- **`variant?`**: `"default" | "destructive" | "cta" | "ghost" | "link" | "positive" | "outline"`
+    
+    The style variant of the button.
+    
+    - `default`: Standard button with accent background.
+    - `destructive`: Button with destructive action styling.
+    - `cta`: Call-to-action button with primary background.
+    - `ghost`: Button with minimal styling and transparent background.
+    - `link`: Styled as a hyperlink with underlined text.
+    - `positive`: Positive action styling with a success state.
+    - `outline`: Outlined button with a border.
+- **`size?`**: `"small" | "default" | "lg" | "icon" | "iconSm" | "button"`
+    
+    The size of the button.
+    
+    - `small`: Smaller height with compact padding.
+    - `default`: Standard height and padding.
+    - `lg`: Larger height with extra padding.
+    - `icon`: Sized for an icon button.
+    - `iconSm`: Small icon button size.
+    - `button`: Fixed width and height for a button.
+- **`href?`**: `UrlObject | string`
+    
+    If provided, the button behaves as a link and renders using the Next.js `<Link>` component.
+    
+- **`kbd?`**: `"cmd+s" | "cmd+enter" | "enter" | "esc"`
+    
+    Displays a keyboard shortcut next to the button text using the `KbdButton` component.
+    
+- **`asChild?`**: `boolean`
+    
+    If true, allows passing a custom component to wrap the button's children.
+    
+- **`loading?`**: `boolean`
+    
+    If true, the button will be in a loading state (disabled).
+    
+- **`disabled?`**: `boolean`
+    
+    Disables the button and prevents user interaction.
+    
+- **`className?`**: `string`
+    
+    Additional classes to customize the button's appearance.
+    
+- **`...props`**:
+    
+    Additional props passed to the button or link element.
+    
+
+### **Default Props**
+
+- `variant`: `"default"`
+- `size`: `"default"`
+- `title`: `""`
+- `enabled`: `true`
+
+---
+
+## **Example: Different Variants and Sizes**
+
+```tsx
+function ButtonExamples() {
+  return (
+    <div className="space-x-2">
+      <Button variant="default">Default</Button>
+      <Button variant="cta" size="lg">
+        Large CTA
+      </Button>
+      <Button variant="destructive" size="small">
+        Small Destructive
+      </Button>
+      <Button variant="link" href="/about">
+        Go to About Page
+      </Button>
+    </div>
+  );
+}
+
+```
+
+---
+
+## **`KbdButton`**
+
+The `KbdButton` component displays keyboard shortcuts associated with the button. It supports the following types:
+
+- **`"cmd+s"`**: Displays the `Cmd` icon and "S".
+- **`"cmd+enter"`**: Displays the `Cmd` icon and the enter icon.
+- **`"enter"`**: Displays only the enter icon.
+- **`"esc"`**: Displays "ESC".
+
+### **Usage Example**
+
+```tsx
+<Button variant="cta" kbd="cmd+s">
+  Save (Cmd+S)
+</Button>
+
+```
+
+This will render a button with a "Cmd+S" keyboard shortcut hint.

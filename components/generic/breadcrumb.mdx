@@ -1,0 +1,142 @@
+---
+title: 'Breadcrumb'
+description: ''
+---
+## **Overview**
+
+The `Breadcrumb` component is a flexible and reusable navigation component that provides a breadcrumb trail, typically used to indicate a user's location within an application's hierarchy. It supports customization of items, links, separators, and ellipsis for overflow handling.
+
+## **Usage**
+
+```tsx
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+  BreadcrumbPage,
+  BreadcrumbEllipsis,
+} from '@/src/app/ui/breadcrumb';
+
+function MyComponent() {
+  return (
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          <BreadcrumbSeparator />
+        </BreadcrumbItem>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/category">Category</BreadcrumbLink>
+          <BreadcrumbSeparator />
+        </BreadcrumbItem>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/subcategory">Subcategory</BreadcrumbLink>
+          <BreadcrumbSeparator />
+        </BreadcrumbItem>
+        <BreadcrumbPage>Current Page</BreadcrumbPage>
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+}
+
+```
+
+## **API**
+
+### **Breadcrumb**
+
+The main wrapper component for the breadcrumb navigation. It provides the appropriate `aria-label` for accessibility.
+
+- **Props**: Inherits from `React.ComponentPropsWithoutRef<"nav">`
+    - **`separator?`**: `React.ReactNode`
+    Custom separator for the breadcrumb items. Defaults to `"/"`.
+
+### **BreadcrumbList**
+
+A wrapper for the list of breadcrumb items.
+
+- **Props**: Inherits from `React.ComponentPropsWithoutRef<"ol">`
+
+### **BreadcrumbItem**
+
+A wrapper for each breadcrumb item. Typically used with `BreadcrumbLink` or `BreadcrumbPage`.
+
+- **Props**: Inherits from `React.ComponentPropsWithoutRef<"li">`
+
+### **BreadcrumbLink**
+
+A clickable link within the breadcrumb.
+
+- **Props**:
+    - **`asChild?`**: `boolean`
+    If `true`, allows passing a custom component as the link.
+    - Inherits from `React.ComponentPropsWithoutRef<"a">`
+
+### **BreadcrumbPage**
+
+Represents the current page in the breadcrumb, marked as `aria-current="page"`.
+
+- **Props**: Inherits from `React.ComponentPropsWithoutRef<"span">`
+
+### **BreadcrumbSeparator**
+
+A separator between breadcrumb items, typically a slash (`/`) or any custom content.
+
+- **Props**: Inherits from `React.ComponentProps<"li">`
+    - **`children?`**: `React.ReactNode`
+    Custom content for the separator. Defaults to `"/"`.
+
+### **BreadcrumbEllipsis**
+
+Represents an ellipsis (`...`) in cases where some breadcrumb items are collapsed.
+
+- **Props**: Inherits from `React.ComponentProps<"span">`
+
+---
+
+## **Example: Custom Separator**
+
+```tsx
+<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/">Home</BreadcrumbLink>
+      <BreadcrumbSeparator>></BreadcrumbSeparator>
+    </BreadcrumbItem>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/category">Category</BreadcrumbLink>
+      <BreadcrumbSeparator>></BreadcrumbSeparator>
+    </BreadcrumbItem>
+    <BreadcrumbPage>Current Page</BreadcrumbPage>
+  </BreadcrumbList>
+</Breadcrumb>
+
+```
+
+In this example, the breadcrumb separator is customized to use `>` instead of the default `/`.
+
+---
+
+## **Example: Overflow with Ellipsis**
+
+```tsx
+<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/">Home</BreadcrumbLink>
+      <BreadcrumbSeparator />
+    </BreadcrumbItem>
+    <BreadcrumbEllipsis />
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/subcategory">Subcategory</BreadcrumbLink>
+      <BreadcrumbSeparator />
+    </BreadcrumbItem>
+    <BreadcrumbPage>Current Page</BreadcrumbPage>
+  </BreadcrumbList>
+</Breadcrumb>
+
+```
+
+In this example, the `BreadcrumbEllipsis` is used to indicate that there are hidden breadcrumb items due to space constraints.

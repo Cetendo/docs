@@ -1,0 +1,150 @@
+---
+title: 'AsyncSelect'
+description: ''
+---
+## **Overview**
+
+The `AsyncSelect` component is a flexible and reusable React component that renders an async-select interface inside a popover. It fetches data asynchronously, displays a list of selectable items, and optionally supports hover cards for additional details.
+
+## **Usage**
+
+```tsx
+import AsyncSelect from '@/src/app/ui/async-select';
+
+function MyComponent() {
+  const fetchData = async () => {
+    // Fetch data logic here
+    return [{ id: '1', name: 'Item 1' }, { id: '2', name: 'Item 2' }];
+  };
+
+  const handleSelect = (item: { id: string; name: string }) => {
+    console.log("Selected item:", item);
+  };
+
+  return (
+    <AsyncSelect
+      placeholder="Search items"
+      fetchData={fetchData}
+      onSelect={handleSelect}
+      searchValue={(item) => item.id}
+      itemComponent={(item) => <div>{item.name}</div>}
+      queryKeys={['async-select']}
+    />
+  );
+}
+
+```
+
+## **API**
+
+### **Props**
+
+- **`trigger?`**: `JSX.Element`
+    
+    The element that triggers the popover. If not provided, the popover is controlled programmatically.
+    
+- **`placeholder`**: `string`
+    
+    The placeholder text for the search input.
+    
+- **`noDataMessage?`**: `string`
+    
+    Message to display when there are no search results. Defaults to `"empty_state.no_data"`.
+    
+- **`side?`**: `"left" | "right" | "top" | "bottom"`
+    
+    Specifies the position of the popover relative to the trigger element. Defaults to `"right"`.
+    
+- **`fetchData`**: `() => Promise<T[]>`
+    
+    The function to fetch the list of items asynchronously.
+    
+- **`onSelect`**: `(item: T) => void`
+    
+    The function to handle item selection from the list.
+    
+- **`searchValue`**: `(item: T) => string`
+    
+    A function that returns the search value for each item.
+    
+- **`itemComponent`**: `(item: T) => JSX.Element`
+    
+    The component used to render each item in the list.
+    
+- **`filter?`**: `(item: T) => boolean`
+    
+    An optional filter function to filter displayed items.
+    
+- **`open?`**: `boolean`
+    
+    A controlled state of whether the popover is open.
+    
+- **`setOpen?`**: `(open: boolean) => void`
+    
+    A function to control the open state of the popover.
+    
+- **`emptyState?`**: `React.ReactNode`
+    
+    A custom empty state component to display when no items are found.
+    
+- **`queryKeys`**: `string[]`
+    
+    The keys used for `react-query` to cache and re-fetch the data.
+    
+- **`renderHoverCard?`**: `boolean`
+    
+    If true, a hover card will be rendered for each item.
+    
+- **`hoverCard?`**: `(item: T) => JSX.Element | null`
+    
+    A function that renders the hover card for an item.
+    
+
+---
+
+## **Features**
+
+- **Async Data Fetching**: The component fetches data asynchronously using the `fetchData` function and manages loading and error states.
+- **Hover Card Support**: Optionally renders a hover card for each item to display additional information.
+- **Custom Empty State**: Supports a custom empty state message or component when no items are available.
+- **Filtering**: Includes an optional `filter` function to further refine the list of items.
+- **Keyboard Navigation**: Fully supports keyboard navigation with a focus on accessibility.
+
+---
+
+## **Example: Hover Card Usage**
+
+```tsx
+<AsyncSelect
+  placeholder="Search for users"
+  fetchData={fetchData}
+  onSelect={handleSelect}
+  searchValue={(item) => item.id}
+  itemComponent={(item) => <div>{item.name}</div>}
+  hoverCard={(item) => <div>More details about {item.name}</div>}
+  renderHoverCard={true}
+  queryKeys={['user-search']}
+/>
+
+```
+
+In this example, the `hoverCard` prop is used to display additional details for each item when the user hovers over it.
+
+---
+
+## **Example: Custom Empty State**
+
+```tsx
+<AsyncSelect
+  placeholder="Search items"
+  fetchData={fetchData}
+  onSelect={handleSelect}
+  searchValue={(item) => item.id}
+  itemComponent={(item) => <div>{item.name}</div>}
+  emptyState={<div>No items found</div>}
+  queryKeys={['item-search']}
+/>
+
+```
+
+This example shows how to provide a custom empty state when no items are available.

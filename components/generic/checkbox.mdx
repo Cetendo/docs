@@ -1,0 +1,142 @@
+---
+title: 'Checkbox'
+description: ''
+---
+## **Overview**
+
+The `Checkbox` component is a customizable checkbox built using `@radix-ui/react-checkbox`. It supports various styles (variants), optional icons for checked states, and can include optional title, description, and a link. The component leverages `class-variance-authority` (`cva`) to manage styles dynamically based on the `variant` prop.
+
+## **Usage**
+
+```tsx
+import { Checkbox } from '@/src/app/ui/checkbox';
+
+function MyComponent() {
+  return (
+    <div>
+      <Checkbox
+        title="Accept Terms"
+        description="Please read and accept our terms."
+        link="<https://example.com>"
+        linkName="Learn more"
+        variant="positive"
+        icon="check"
+      />
+    </div>
+  );
+}
+
+```
+
+## **API**
+
+### **Props**
+
+- **`variant?`**: `"default" | "destructive" | "muted" | "positive"`
+    
+    Defines the style of the checkbox.
+    
+    - **`default`**: Standard checkbox with a primary color when checked.
+    - **`destructive`**: Checkbox with a destructive theme when checked (e.g., red).
+    - **`muted`**: Checkbox with a muted color scheme.
+    - **`positive`**: Checkbox with a positive theme when checked (e.g., green).
+- **`icon?`**: `"check" | "cross" | "line"`
+    
+    Defines the icon that appears inside the checkbox when checked.
+    
+    - **`check`**: Displays a checkmark (default).
+    - **`cross`**: Displays a cross (X).
+    - **`line`**: Displays a line or other symbol.
+- **`title?`**: `string`
+    
+    Optional title or label that appears next to the checkbox.
+    
+- **`description?`**: `string`
+    
+    Optional description that provides additional context.
+    
+- **`link?`**: `string`
+    
+    Optional link URL for more information.
+    
+- **`linkName?`**: `string`
+    
+    The text for the link if a `link` is provided.
+    
+- **`className?`**: `string`
+    
+    Additional CSS classes to customize the component's appearance.
+    
+
+### **Default Props**
+
+- **`variant`**: `"default"`
+- **`icon`**: `"check"`
+
+---
+
+## **Examples**
+
+### **Basic Checkbox**
+
+```tsx
+<Checkbox
+  title="Subscribe to newsletter"
+  description="Get weekly updates and news."
+  variant="default"
+/>
+
+```
+
+This renders a basic checkbox with the default variant and a description.
+
+---
+
+### **Checkbox with Icon and Link**
+
+```tsx
+<Checkbox
+  title="I agree to the terms"
+  description="Please read our terms and conditions."
+  link="<https://example.com/terms>"
+  linkName="Read terms"
+  variant="positive"
+  icon="check"
+/>
+
+```
+
+This renders a checkbox with a checkmark icon, positive variant, and a link to the terms and conditions.
+
+---
+
+### **Checkbox with Cross Icon**
+
+```tsx
+<Checkbox
+  title="Delete account"
+  description="This action is irreversible."
+  variant="destructive"
+  icon="cross"
+/>
+
+```
+
+This example uses the destructive variant and displays a cross icon to indicate a critical action.
+
+---
+
+### **Styling and Customization**
+
+You can pass additional styles using the `className` prop to further customize the appearance:
+
+```tsx
+<Checkbox
+  title="Enable notifications"
+  variant="muted"
+  className="border-blue-500"
+/>
+
+```
+
+This applies a custom blue border to the checkbox while using the muted variant.

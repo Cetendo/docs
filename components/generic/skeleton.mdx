@@ -1,0 +1,39 @@
+---
+title: 'Skeleton'
+description: ''
+---
+**Props:** 
+Our Skeleton component takes two props that give you the power to tailor it to your app's needs:
+
+- `specialColor`: This optional prop allows you to override the default background and accent colors with a custom color of your choice. Think of it as a special sauce that adds an extra layer of flavor to your loading state.
+- `className`: This prop lets you add custom tailwind classes to the component, giving you even more control over its styling and behavior.
+
+**Example Usages: Putting it All Together**
+Here are a couple of examples to get you started:
+
+### Example 1: Simple Skeleton
+
+```jsx
+<Skeleton />
+
+```
+
+This will render a basic Skeleton component with default colors and styling. It's like a blank canvas waiting for your content to arrive.
+
+### Example 2: Custom Rectangle Skeleton
+
+```jsx
+<Skeleton className="h-3 w-8 rounded-md" />
+
+```
+
+In this example, we're creating a Skeleton with a height of 3rem, width of 8rem, a gray background, and rounded corners. It's like a custom-made loading state that fits your app's style.
+
+### Example 3: Circle Skeleton
+
+```jsx
+<Skeleton className="h-8 w-8 rounded-full" />
+
+```
+
+Here, we're creating a circular Skeleton with a diameter of 8rem, a gray background, and a fully rounded shape. It's like a loading state that's both futuristic and mesmerizing!

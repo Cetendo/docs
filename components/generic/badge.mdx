@@ -1,0 +1,92 @@
+---
+title: 'Badge'
+description: ''
+---
+## **Overview**
+
+The `Badge` component is a flexible and reusable UI component used to display badges with various styles and appearances. It leverages `class-variance-authority` (CVA) to define variants for different styles, making it easy to customize while keeping the codebase clean and consistent.
+
+## **Usage**
+
+```tsx
+import { Badge } from '@/src/app/ui/badge';
+
+function MyComponent() {
+  return (
+    <div>
+      <Badge variant="default">Default Badge</Badge>
+      <Badge variant="secondary">Secondary Badge</Badge>
+      <Badge variant="destructive">Destructive Badge</Badge>
+    </div>
+  );
+}
+
+```
+
+## **API**
+
+### **Props**
+
+- **`variant?`**: `"default" | "secondary" | "destructive" | "warning" | "outline"`
+    
+    Defines the visual style of the badge. The available variants are:
+    
+    - `default`: Rounded, accent border, foreground background.
+    - `secondary`: Muted contrast text, transparent border, secondary background.
+    - `destructive`: Destructive foreground, transparent border, destructive background.
+    - `warning`: Warning contrast text, warning background.
+    - `outline`: Contrast text, outlined border.
+- **`className?`**: `string`
+    
+    Additional class names to customize the badge.
+    
+- **`...props`**:
+    
+    Any additional props that can be passed to a `div` element (e.g., `onClick`, `style`, etc.).
+    
+
+### **Default Props**
+
+- **`variant`**: `"default"`
+If no variant is specified, it defaults to the "default" style.
+
+### **Variants**
+
+- **`default`**:
+    - Rounded, bordered, and filled with foreground color.
+    - Applied classes: `rounded-full border border-accent bg-foreground text-contrast hover:bg-foreground/80`
+- **`secondary`**:
+    - Muted contrast text, transparent border, secondary background.
+    - Applied classes: `text-muted-contrast rounded-full border-transparent bg-secondary hover:bg-secondary/80`
+- **`destructive`**:
+    - Destructive foreground, transparent border, destructive background.
+    - Applied classes: `text-destructive-foreground rounded-full border-transparent bg-destructive hover:bg-destructive/80`
+- **`warning`**:
+    - Warning contrast text, warning background.
+    - Applied classes: `rounded-full border-warning-contrast/30 bg-warning text-contrast hover:bg-warning/80`
+- **`outline`**:
+    - Contrast text with an outlined border.
+    - Applied classes: `border border-border text-contrast`
+
+---
+
+## **Example: Badge with Different Variants**
+
+```tsx
+import { Badge } from '@/src/app/ui/badge';
+...
+function BadgeExample() {
+  return (
+    <div className="space-x-2">
+      <Badge variant="default">Default</Badge>
+      <Badge variant="secondary">Secondary</Badge>
+      <Badge variant="destructive">Destructive</Badge>
+      <Badge variant="warning">Warning</Badge>
+      <Badge variant="outline">Outline</Badge>
+    </div>
+  );
+}
+
+```
+
+In this example, various badge variants are displayed side by side with different styles depending on the `variant` prop.

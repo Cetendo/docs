@@ -1,0 +1,108 @@
+---
+title: 'AsyncTable'
+description: ''
+---
+The Async Table is a robust and adaptable table component designed for React applications. It efficiently handles data fetching, sorting, filtering, and pagination, allowing you to focus on building your application's core features. By leveraging the power of React Query and React Table, this component provides a seamless user experience and simplifies your development process.
+
+**Props**
+
+The Async Table component accepts the following props:
+
+- `queryKeys`: An array of query keys used for data fetching.
+- `promise`: A function that returns a promise resolving to an array of data.
+- `data`: An optional array of data to be used instead of fetching from the promise.
+- `setData`: An optional function to update the data.
+- `columns`: An array of column definitions for the table.
+- `refreshTrigger`: An optional trigger to refresh the data.
+- `topRightComponent`: An optional component to be rendered in the top-right corner of the table.
+- `onDataUpdate`: An optional function to be called when the data is updated.
+- `styleSettings`: An optional object to customize the table's appearance and behavior.
+    - `rowsPerPage`: The number of rows to display per page.
+    - `additionalComponent`: An optional component to be rendered above the table.
+    - `searchBarPosition`: The position of the search bar, either "left" or "right".
+    - `height`: The height of the table container.
+    - `showSearchBar`: A boolean indicating whether to display the search bar.
+    - `pagination`: A boolean indicating whether to enable pagination.
+    - `showComponentWithoutData`: A boolean indicating whether to render the table even when there is no data.
+    - `emptyState`: An optional component to be rendered when there is no data.
+    - `showPaginationIfItemCountIsBelowMinRowCount`: A boolean indicating whether to show pagination even when the item count is below the minimum row count.
+
+## Example Usage
+
+### Basic Example
+
+```jsx
+import AsyncTable from './AsyncTable';
+
+const dataPromise = () => {
+// just an example, not the right way to fetch check out the documentation
+ // on how we really fetch data to support react-query
+  return fetch('/api/data').then(response => response.json());
+};
+
+const columns = [
+  {
+    accessor: 'name',
+    header: 'Name',
+  },
+  {
+    accessor: 'age',
+    header: 'Age',
+  },
+];
+
+const App = () => {
+  return (
+    <AsyncTable
+      queryKeys={['data']}
+      promise={dataPromise}
+      columns={columns}
+    />
+  );
+};
+```
+
+### Customized Example
+
+```jsx
+import AsyncTable from './AsyncTable';
+
+const dataPromise = () => {
+ // just an example, not the right way to fetch check out the documentation
+ // on how we really fetch data to support react-query
+  return fetch('/api/data')
+};
+
+const columns = [
+  {
+    accessor: 'name',
+    header: 'Name',
+  },
+  {
+    accessor: 'age',
+    header: 'Age',
+  },
+];
+
+const styleSettings = {
+  rowsPerPage: 20,
+  additionalComponent: <Button>Custom Button</Button>,
+  searchBarPosition: 'right',
+  height: 500,
+  showSearchBar: true,
+  pagination: true,
+};
+
+const App = () => {
+  return (
+    <AsyncTable
+      queryKeys={['data']}
+      promise={dataPromise}
+      columns={columns}
+      styleSettings={styleSettings}
+    />
+  );
+};
+```
+
+In this example, we customize the table's appearance and behavior by providing a styleSettings object. We set the number of rows per page to 20, add a custom button above the table, position the search bar on the right, set the table's height to 500 pixels, and enable pagination.

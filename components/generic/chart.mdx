@@ -1,0 +1,152 @@
+---
+title: 'Chart'
+description: ''
+---
+## **Overview**
+
+The `ChartContainer` component is a customizable wrapper for charts built with `recharts`. It provides theming support, tooltip content customization, and a flexible way to handle legends and other chart-related styles. It supports light and dark themes and includes a context to manage chart configurations.
+
+## **Usage**
+
+```tsx
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  ChartLegend,
+  ChartLegendContent,
+} from '@/src/app/ui/chart';
+import { LineChart, Line, XAxis, YAxis } from 'recharts';
+
+const data = [
+  { name: 'Jan', value: 400 },
+  { name: 'Feb', value: 300 },
+  { name: 'Mar', value: 200 },
+];
+
+function MyChart() {
+  const config = {
+    value: { label: 'Value', color: '#8884d8' },
+    name: { label: 'Month', color: '#82ca9d' },
+  };
+
+  return (
+    <ChartContainer config={config}>
+      <LineChart data={data}>
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Line type="monotone" dataKey="value" stroke="#8884d8" />
+        <ChartTooltip content={<ChartTooltipContent />} />
+        <ChartLegend content={<ChartLegendContent />} />
+      </LineChart>
+    </ChartContainer>
+  );
+}
+
+```
+
+## **API**
+
+### **ChartContainer**
+
+The `ChartContainer` component is the main wrapper for rendering any chart using `recharts`. It provides context for the chart configuration, theming, and various styles.
+
+- **Props**:
+    - **`config`**: `ChartConfig`
+    The configuration object that provides styles, labels, and icons for various chart elements.
+    - **`children`**:
+    The chart to render inside the container. Typically a `recharts` chart component.
+
+### **ChartConfig**
+
+The `config` prop in `ChartContainer` allows you to define styles and labels for each part of the chart, including theme-specific colors.
+
+- **Example**:
+    
+    ```
+    const config = {
+      value: { label: 'Value', color: '#8884d8' },
+      month: { label: 'Month', theme: { light: '#000', dark: '#fff' } },
+    };
+    
+    ```
+    
+    - **`label`**: A label for the chart element (e.g., axis, legend).
+    - **`color`**: A specific color for the element.
+    - **`theme`**: An object that provides different colors for light and dark themes.
+
+---
+
+### **ChartTooltip**
+
+The `ChartTooltip` component wraps the `recharts` `Tooltip` component to provide additional customizability and theming. You can customize the content by passing the `ChartTooltipContent` as the `content` prop.
+
+---
+
+### **ChartTooltipContent**
+
+A customizable tooltip content component that displays chart values and labels.
+
+- **Props**:
+    - **`hideLabel`**: `boolean`
+    Whether to hide the label of the tooltip.
+    - **`hideIndicator`**: `boolean`
+    Whether to hide the indicator (e.g., line or dot) next to the label.
+    - **`indicator`**: `"line" | "dot" | "dashed"`
+    The type of indicator to display next to the label.
+    - **`nameKey`**: `string`
+    Key used to determine the name of the data point.
+    - **`labelKey`**: `string`
+    Key used to determine the label of the data point.
+    - **`formatter`**: A custom formatter for the value displayed in the tooltip.
+
+---
+
+### **ChartLegend**
+
+The `ChartLegend` component is a wrapper around the `recharts` `Legend` component, which provides customizable legends for charts. You can use `ChartLegendContent` as the content prop to fully customize the legend.
+
+---
+
+### **ChartLegendContent**
+
+Custom content for the chart legend that displays labels and icons based on the chart's configuration.
+
+- **Props**:
+    - **`hideIcon`**: `boolean`
+    Whether to hide the icons next to the legend labels.
+    - **`nameKey`**: `string`
+    Key used to determine the name of the data point in the legend.
+
+---
+
+### **Themes**
+
+The component supports both light and dark themes using the `THEMES` constant, which applies different styles based on the user's theme preference.
+
+---
+
+## **Example: Customizing Tooltip and Legend**
+
+```tsx
+<ChartContainer config={config}>
+  <LineChart data={data}>
+    <XAxis dataKey="name" />
+    <YAxis />
+    <Line type="monotone" dataKey="value" stroke="#8884d8" />
+    <ChartTooltip
+      content={
+        <ChartTooltipContent
+          hideLabel={false}
+          indicator="line"
+          nameKey="name"
+        />
+      }
+    />
+    <ChartLegend content={<ChartLegendContent hideIcon={false} />} />
+  </LineChart>
+</ChartContainer>
+
+```
+
+This example demonstrates how to customize the tooltip and legend content in a chart.

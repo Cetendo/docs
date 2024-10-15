@@ -1,0 +1,191 @@
+---
+title: 'DropdownMenu'
+description: ''
+---
+## **Overview**
+
+The `DropdownMenu` component is a customizable dropdown menu built using `@radix-ui/react-dropdown-menu`. It supports various menu items such as checkboxes, radio buttons, labels, and separators. The component also supports submenus, icons, and keyboard shortcuts.
+
+## **Usage**
+
+```tsx
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuItem,
+  DropdownMenuContent,
+  DropdownMenuSeparator,
+  DropdownMenuCheckboxItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+} from '@/src/app/ui/dropdown-menu';
+
+function MyDropdownMenu() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <button className="p-4">Open Menu</button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent>
+        <DropdownMenuItem>Action 1</DropdownMenuItem>
+        <DropdownMenuItem>Action 2</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuCheckboxItem checked={true}>Enable Feature</DropdownMenuCheckboxItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuRadioGroup>
+          <DropdownMenuRadioItem value="option-1">Option 1</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="option-2">Option 2</DropdownMenuRadioItem>
+        </DropdownMenuRadioGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+```
+
+## **API**
+
+### **DropdownMenu**
+
+The root component for the dropdown menu.
+
+- **Props**: Inherits from `DropdownMenuPrimitive.Root`.
+
+---
+
+### **DropdownMenuTrigger**
+
+Defines the element that triggers the dropdown menu when clicked.
+
+- **Props**: Inherits from `DropdownMenuPrimitive.Trigger`.
+
+---
+
+### **DropdownMenuContent**
+
+The container for the dropdown menu items. This appears when the trigger is activated.
+
+- **Props**:
+    - **`sideOffset?`**: `number`
+    Controls the distance between the dropdown menu and its trigger element.
+    - Inherits from `DropdownMenuPrimitive.Content`.
+
+---
+
+### **DropdownMenuItem**
+
+An individual item inside the dropdown menu.
+
+- **Props**:
+    - **`inset?`**: `boolean`
+    Adds extra padding to the item for alignment.
+    - Inherits from `DropdownMenuPrimitive.Item`.
+
+---
+
+### **DropdownMenuCheckboxItem**
+
+A checkbox item inside the dropdown menu.
+
+- **Props**:
+    - **`checked`**: `boolean`
+    The checked state of the checkbox.
+    - Inherits from `DropdownMenuPrimitive.CheckboxItem`.
+
+---
+
+### **DropdownMenuRadioGroup**
+
+A container for grouping radio items inside the dropdown menu.
+
+- **Props**: Inherits from `DropdownMenuPrimitive.RadioGroup`.
+
+---
+
+### **DropdownMenuRadioItem**
+
+A radio item inside the dropdown menu.
+
+- **Props**:
+    - **`value`**: `string`
+    The value of the radio item.
+    - Inherits from `DropdownMenuPrimitive.RadioItem`.
+
+---
+
+### **DropdownMenuLabel**
+
+A label inside the dropdown menu to describe a group of items.
+
+- **Props**: Inherits from `DropdownMenuPrimitive.Label`.
+
+---
+
+### **DropdownMenuSeparator**
+
+A separator that divides sections inside the dropdown menu.
+
+- **Props**: Inherits from `DropdownMenuPrimitive.Separator`.
+
+---
+
+### **DropdownMenuShortcut**
+
+Displays a keyboard shortcut next to a menu item.
+
+- **Props**: Inherits from `React.HTMLAttributes<HTMLSpanElement>`.
+
+---
+
+### **DropdownMenuSub**
+
+Defines a submenu that can be nested within the main dropdown menu.
+
+- **Props**: Inherits from `DropdownMenuPrimitive.Sub`.
+
+---
+
+### **DropdownMenuSubTrigger**
+
+The trigger for a submenu. It shows an icon indicating that there is a nested submenu.
+
+- **Props**:
+    - **`inset?`**: `boolean`
+    Adds extra padding to the item for alignment.
+    - Inherits from `DropdownMenuPrimitive.SubTrigger`.
+
+---
+
+### **DropdownMenuSubContent**
+
+The container for submenu items that appear when the submenu trigger is activated.
+
+- **Props**: Inherits from `DropdownMenuPrimitive.SubContent`.
+
+---
+
+## **Example: Dropdown Menu with Submenu**
+
+```tsx
+<DropdownMenu>
+  <DropdownMenuTrigger>
+    <button className="p-4">Open Menu</button>
+  </DropdownMenuTrigger>
+
+  <DropdownMenuContent>
+    <DropdownMenuItem>Action 1</DropdownMenuItem>
+    <DropdownMenuSeparator />
+    <DropdownMenuSub>
+      <DropdownMenuSubTrigger inset>More Options</DropdownMenuSubTrigger>
+      <DropdownMenuSubContent>
+        <DropdownMenuItem>Sub Action 1</DropdownMenuItem>
+        <DropdownMenuItem>Sub Action 2</DropdownMenuItem>
+      </DropdownMenuSubContent>
+    </DropdownMenuSub>
+  </DropdownMenuContent>
+</DropdownMenu>
+
+```
+
+In this example, a submenu is added with a trigger that shows more options when hovered over.

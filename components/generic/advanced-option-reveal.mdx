@@ -1,0 +1,90 @@
+---
+title: 'AdvancedOptionReveal'
+description: ''
+---
+## **Overview**
+
+The `AdvancedOptionReveal` component is a wrapper that utilizes an accordion to toggle the visibility of advanced options or additional content. It uses the `Accordion` component to reveal hidden content when the user interacts with it. The component can accept custom text and additional classes while providing translated default text.
+
+## **Usage**
+
+```tsx
+import AdvancedOptionReveal from '@/src/app/ui/advancedOptionReveal';
+
+function MyComponent() {
+  return (
+    <AdvancedOptionReveal>
+      <p>Here are some advanced settings you can adjust.</p>
+    </AdvancedOptionReveal>
+  );
+}
+
+```
+
+## **API**
+
+### **Props**
+
+- **`alternateText?`**: `string`
+    
+    Custom text for the accordion trigger. If not provided, it defaults to a translated label for "Advanced Options".
+    
+- **`className?`**: `string`
+    
+    Additional class names for customizing the appearance of the component.
+    
+- **`children`**: `React.ReactNode`
+    
+    The content that will be revealed when the accordion is expanded.
+    
+
+---
+
+## **Translation**
+
+The component utilizes the `useTranslation` hook to fetch translated strings. If `alternateText` is not provided, it uses the translations for "Advanced Options" from the `t.course["content-block-creator"]` and `t.generic["advanced-options"]` namespaces.
+
+### **Example: Customizing the Text**
+
+```tsx
+<AdvancedOptionReveal alternateText="Show More Settings">
+  <p>Additional settings for advanced users.</p>
+</AdvancedOptionReveal>
+
+```
+
+This example provides custom text `"Show More Settings"` for the accordion trigger.
+
+---
+
+## **Class Management**
+
+The component leverages `clsx` to manage the conditional class names, allowing you to add additional styling to the accordion via the `className` prop.
+
+### **Example: Adding Custom Styles**
+
+```tsx
+<AdvancedOptionReveal className="bg-gray-200 p-4">
+  <p>Advanced options content</p>
+</AdvancedOptionReveal>
+
+```
+
+In this example, additional padding and background styles are applied to the accordion wrapper using the `className` prop.
+
+---
+
+## **Default Behavior**
+
+When no `alternateText` is provided, the component defaults to displaying the translated string for "Advanced Options" using `t.course["content-block-creator"]["advanced-options"]` or `t.generic["advanced-options"]`.
+
+### **Example: Default Text**
+
+```tsx
+<AdvancedOptionReveal>
+  <p>Advanced options for configuring the content block.</p>
+</AdvancedOptionReveal>
+
+```
+
+This renders an accordion with the default "Advanced Options" label from the translation file and the content revealed upon clicking.

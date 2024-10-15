@@ -1,0 +1,96 @@
+---
+title: 'Calendar'
+description: ''
+---
+## **Overview**
+
+The `Calendar` component is a customizable date picker built on top of `react-day-picker`. It provides various customization options for styles and behavior and supports showing days outside the current month. It also leverages `clsx` for conditional styling and includes custom navigation icons.
+
+## **Usage**
+
+```tsx
+import { Calendar } from '@/src/app/ui/calendar';
+
+function MyComponent() {
+  return (
+    <div>
+      <Calendar
+        selected={new Date()}
+        onSelect={(date) => console.log("Selected date:", date)}
+      />
+    </div>
+  );
+}
+
+```
+
+## **API**
+
+### **Props**
+
+This component inherits all the props from `DayPicker` in `react-day-picker`.
+
+- **`className?`**: `string`
+    
+    Additional classes to apply to the calendar container.
+    
+- **`classNames?`**: `Partial<DayPickerClassNames>`
+    
+    Override specific class names for various elements of the calendar.
+    
+- **`showOutsideDays?`**: `boolean`
+    
+    If `true`, displays the days from adjacent months that fall outside the current month.
+    
+
+### **Custom Class Names**
+
+The `Calendar` component uses the `classNames` prop to apply styles to different parts of the calendar. Here's a breakdown of the key class names:
+
+- **`months`**: Layout for the calendar months. Default: `"flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0"`.
+- **`month`**: Layout for an individual month. Default: `"space-y-4"`.
+- **`caption`**: Container for the month caption and navigation buttons. Default: `"flex justify-center pt-1 relative items-center"`.
+- **`nav_button`**: Navigation button styles (for the previous/next arrows). Default: `"size-7 bg-transparent p-0 opacity-50 hover:opacity-100"`.
+- **`table`**: Table layout for the days of the month. Default: `"w-full border-collapse space-y-1"`.
+- **`day`**: Day button styles. Default: Uses `buttonVariants({ variant: "ghost" })` with `"size-9 p-0 font-normal"`.
+- **`day_selected`**: Selected day styles. Default: `"bg-primary text-primary-foreground"`.
+- **`day_outside`**: Styles for days outside the current month. Default: `"text-muted-foreground opacity-50"`.
+
+### **Custom Components**
+
+- **`IconLeft`**: Custom component for the left (previous month) navigation button. Default: `<ChevronLeft className="size-4" />`.
+- **`IconRight`**: Custom component for the right (next month) navigation button. Default: `<ChevronRight className="size-4" />`.
+
+---
+
+## **Example: Customizing Styles**
+
+```tsx
+<Calendar
+  className="bg-gray-100 p-4 rounded-lg"
+  classNames={{
+    day_selected: "bg-blue-500 text-white",
+    day_today: "bg-yellow-300 text-black",
+    nav_button: "bg-transparent hover:bg-gray-300",
+  }}
+  selected={new Date()}
+  onSelect={(date) => console.log("Selected date:", date)}
+/>
+
+```
+
+In this example, custom styles are applied to the selected day, today's day, and the navigation buttons.
+
+---
+
+## **Example: Showing Days Outside Current Month**
+
+```tsx
+<Calendar
+  showOutsideDays={true}
+  onSelect={(date) => console.log("Selected date:", date)}
+/>
+
+```
+
+This example enables the `showOutsideDays` prop to display days from adjacent months within the current month's calendar view.

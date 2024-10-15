@@ -1,0 +1,151 @@
+---
+title: 'Command'
+description: ''
+---
+## **Overview**
+
+The `Command` component is a flexible search or command input interface using `cmdk`, designed for handling various search functionalities inside a dialog. It allows grouping, custom commands, shortcuts, and shows empty states or loading states.
+
+## **Usage**
+
+```tsx
+import {
+  Command,
+  CommandDialog,
+  CommandInput,
+  CommandList,
+  CommandItem,
+  CommandEmpty,
+  CommandGroup,
+} from '@/src/app/ui/command';
+
+function MyCommandDialog() {
+  return (
+    <CommandDialog>
+      <CommandInput placeholder="Search..." />
+      <CommandList>
+        <CommandEmpty>No results found.</CommandEmpty>
+        <CommandGroup heading="Suggestions">
+          <CommandItem>Option 1</CommandItem>
+          <CommandItem>Option 2</CommandItem>
+        </CommandGroup>
+      </CommandList>
+    </CommandDialog>
+  );
+}
+
+```
+
+## **API**
+
+### **Command**
+
+A wrapper around the `cmdk` command primitive that allows you to create a command input interface with custom styling.
+
+- **Props**: Inherits from `CommandPrimitive`.
+
+### **CommandDialog**
+
+A wrapper for showing the command input inside a dialog. It uses the `Dialog` and `DialogContent` components to display the command input in a modal.
+
+- **Props**: Inherits from `DialogProps`.
+
+---
+
+### **CommandInput**
+
+The input element where the user can type their commands or search query.
+
+- **Props**: Inherits from `CommandPrimitive.Input`.
+
+---
+
+### **CommandList**
+
+Displays the list of results or commands based on the user input.
+
+- **Props**: Inherits from `CommandPrimitive.List`.
+
+---
+
+### **CommandItem**
+
+An individual item inside the command list that can be selected.
+
+- **Props**: Inherits from `CommandPrimitive.Item`.
+
+---
+
+### **CommandGroup**
+
+A container for grouping related command items. You can use headings to visually separate groups of items.
+
+- **Props**: Inherits from `CommandPrimitive.Group`.
+
+---
+
+### **CommandSeparator**
+
+A visual separator to divide sections or groups inside the command list.
+
+- **Props**: Inherits from `CommandPrimitive.Separator`.
+
+---
+
+### **CommandEmpty**
+
+Displays a message or content when there are no results or commands available.
+
+- **Props**: Inherits from `CommandPrimitive.Empty`.
+
+---
+
+### **CommandLoading**
+
+Displays a loading state when the data or commands are being fetched.
+
+- **Props**: Inherits from `CommandPrimitive.Loading`.
+
+---
+
+### **CommandShortcut**
+
+Displays a shortcut next to the command items for keyboard navigation or hints.
+
+- **Props**: Inherits from `React.HTMLAttributes<HTMLSpanElement>`.
+
+---
+
+## **Example: Using Command with Dialog**
+
+```tsx
+<CommandDialog>
+  <CommandInput placeholder="Type a command..." />
+  <CommandList>
+    <CommandEmpty>No commands found.</CommandEmpty>
+    <CommandGroup heading="Navigation">
+      <CommandItem>Go to Home</CommandItem>
+      <CommandItem>Open Settings</CommandItem>
+    </CommandGroup>
+  </CommandList>
+</CommandDialog>
+
+```
+
+In this example, a command dialog is shown where users can type a command. It groups command items and displays an empty state when no commands are found.
+
+---
+
+## **Example: Command with Loading State**
+
+```tsx
+<CommandDialog>
+  <CommandInput placeholder="Search..." />
+  <CommandList>
+    <CommandLoading>Loading...</CommandLoading>
+  </CommandList>
+</CommandDialog>
+
+```
+
+This example shows a loading state inside the command dialog when fetching data or performing background operations.
