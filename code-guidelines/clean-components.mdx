@@ -18,18 +18,12 @@ When creating React components, adhering to certain principles helps maintain st
 ### 2. **Component Structure**
 - **Only one component per file**. Each file should export a single component, unless you're working with small, reusable helpers or subcomponents.
 - **Folder structure** should mirror the component hierarchy for clarity and modularity.
-
-Example structure:
-
-/components /Button index.tsx Button.styles.ts Button.types.ts /Header index.tsx Header.styles.ts Header.tsx
-
-vbnet
-
+- **Colocation:** Ensure that your component-related files (styles, types, tests, etc.) are colocated within the same folder as the component itself for better maintainability. You can refer to the [Colocations](/code-guidelines/colocations) guide for more details on how to structure and colocate your files efficiently.
 
 ### 3. **Break Down Large Components**
 - Extract components when:
   - It becomes harder to understand the composition of the current component because of subcomponents.
-  - The component grows too large (typically over 200 lines) or becomes hard to read.
+  - The component grows too large (typically over 100 lines) or becomes hard to read.
 - **Naming** plays a vital role in breaking components. Good names allow developers to easily understand the component's responsibility and how it fits into the larger system.
 
 For example, break this large component:
@@ -37,9 +31,27 @@ For example, break this large component:
 function Dashboard() {
   return (
     <div>
-      <Sidebar />
-      <Content />
-      <Footer />
+      <nav className="sidebar">
+        <ul>
+          <li>Home</li>
+          <li>Settings</li>
+          <li>Profile</li>
+        </ul>
+      </nav>
+      <main className="content">
+        <section className="overview">
+          <h1>Welcome to the Dashboard</h1>
+          <p>Here you can manage your profile, settings, and view statistics.</p>
+        </section>
+        <section className="stats">
+          <h2>Your Stats</h2>
+          <p>Profile Views: 1,234</p>
+          <p>Messages: 56</p>
+        </section>
+      </main>
+      <footer className="footer">
+        <p>© 2024 My Dashboard. All rights reserved.</p>
+      </footer>
     </div>
   );
 }
@@ -57,34 +69,7 @@ function Dashboard() {
   );
 }
 ```
-4. Avoid Deep Nesting
-
-    Excessive component nesting decreases readability and increases complexity. Aim for flat and declarative structures.
-
-Bad:
-
-```tsx
-<Dashboard>
-  <Sidebar>
-    <Menu>
-      <MenuItem>Item 1</MenuItem>
-      <MenuItem>Item 2</MenuItem>
-    </Menu>
-  </Sidebar>
-</Dashboard>
-```
-Good:
-
-```tsx
-<Dashboard>
-  <Sidebar />
-</Dashboard>
-<Menu>
-  <MenuItem label="Item 1" />
-  <MenuItem label="Item 2" />
-</Menu>
-```
-5. Error Boundaries
+4. Error Boundaries
 
     Use the ErrorBoundary component from React or a custom one to gracefully handle errors. Wrap components that deal with complex business logic or rely heavily on external APIs.
 
@@ -102,7 +87,7 @@ function ProductPage() {
   );
 }
 ```
-6. Functional, Declarative Components
+5. Functional, Declarative Components
 
     Use functional components and hooks. Avoid class components unless absolutely necessary. Prefer declarative programming to make the UI logic more readable and predictable.
 
@@ -130,25 +115,8 @@ class UserProfile extends React.Component {
   }
 }
 ```
-7. Next.js-Specific Best Practices
 
-    Use the App Router's conventions for file-based routing. Keep your page and layout components clean and focus them on structuring the view, not complex logic.
-
-Page Example (App Router):
-
-```tsx
-import { getData } from '@/src/app/services/api';
-import { UserProfile } from '@/src/app/components/UserProfile';
-
-export default async function Page() {
-  const data = await getData();
-  
-  return <UserProfile data={data} />;
-}
-```
-    Handle data fetching in the server-side or using React Query for the client-side, avoiding directly embedding API calls into components.
-
-8. Props Management
+6. Props Management
 
     Use descriptive prop names to make your components reusable and intuitive. If a component has many props, consider grouping them into an object.
 
@@ -183,7 +151,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, isLoggedIn }) => {
   );
 };
 ```
-9. Reusability and Composition
+7. Reusability and Composition
 
     Build small, reusable components that can be composed into larger ones. Ensure components are stateless if possible, and handle state at the top-most component or via hooks.
 
@@ -202,7 +170,7 @@ const LoginForm = () => (
   </form>
 );
 ```
-10. State and Side Effects
+8. State and Side Effects
 
     Use React Hooks (useState, useEffect, etc.) for managing component state and side effects. Keep logic that modifies state separate from UI logic to maintain clarity.
 
@@ -231,29 +199,5 @@ const UserProfile = () => {
   return <div>{user.name}</div>;
 };
 ```
-11. Avoid Hardcoding Styles and Layouts
-
-    Use CSS modules or styled-components to style your components, instead of inline styles or hardcoded classes. This keeps the component logic and styles separated and ensures reusability.
-
-Example using CSS Modules:
-
-```tsx
-import styles from './Button.module.css';
-
-const Button = ({ label }) => (
-  <button className={styles.button}>{label}</button>
-);
-```
-12. Consistent Naming Conventions
-
-    Use PascalCase for component names (e.g., UserProfile, LoginForm).
-    For component files, keep the naming consistent with the component name (e.g., UserProfile.tsx for the UserProfile component).
-
-Summary
-
-By following these best practices, you ensure that your components are clean, reusable, maintainable, and scalable. Adhering to Single Responsibility Principle and Next.js standards will improve collaboration and code readability across the team.
-
-vbnet
-
 
 This guide focuses on ensuring that your **React components** follow the best practices for **clean code**,
