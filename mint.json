@@ -92,6 +92,38 @@
         "components/auth/protect",
         "components/auth/protected-link"
       ]
+    },
+    {
+      "group": "Generic Components",
+      "pages": [
+        "components/generic/accordion",
+        "components/generic/advanced-option-reveal",
+        "components/generic/async-search",
+        "components/generic/async-select",
+        "components/generic/async-table",
+        "components/generic/async-tag-select",
+        "components/generic/badge",
+        "components/generic/box",
+        "components/generic/breadcrumb",
+        "components/generic/button",
+        "components/generic/calendar",
+        "components/generic/card",
+        "components/generic/carousel",
+        "components/generic/chart",
+        "components/generic/checkbox",
+        "components/generic/color-picker",
+        "components/generic/command",
+        "components/generic/context-menu",
+        "components/generic/dropdown-menu",
+        "components/generic/duration-selector",
+        "components/generic/form-layout",
+        "components/generic/input",
+        "components/generic/query-dialog",
+        "components/generic/replace-with-highlight",
+        "components/generic/router-back-button",
+        "components/generic/skeleton",
+        "components/generic/stacked-progress-bar"
+      ]
     }
   ],
   "footerSocials": {
