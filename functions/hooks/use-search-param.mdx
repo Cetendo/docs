@@ -1,0 +1,95 @@
+---
+title: 'useSearchParam'
+description: ''
+---
+## Important:
+
+We recommend using `useQueryState`  from https://github.com/47ng/nuqs. It is way after and has a better UX in the frontend. However is has some drawbacks, like deleting many keys. So only use this hook if the `useQueryState` does not get you where you want to be.
+
+## Overview
+
+The `useSearchParam` hook simplifies the process of getting and setting URL query parameters in a Next.js application. It abstracts away the boilerplate code required to manipulate query parameters, making your components cleaner and more maintainable.
+
+*The hook does not include debounce logic. This is intentional, as debounce requirements can vary depending on the specific use case. It's better to implement debounce separately when needed.*
+
+## Usage
+
+```tsx
+  const { set, get, getAll, del } = useSearchParam();
+```
+
+### Before (How it usually works)
+
+In a typical scenario, you might handle query parameters directly within your component using `useRouter`, `usePathname`, and `useSearchParams` from Next.js. Here's an example:
+
+```tsx
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
+const QueryParamButton: React.FC = () => {
+  const [paramValue, setParamValue] = useState<string | null>(null);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams) {
+      setParamValue(searchParams.get("example-param"));
+    }
+  }, [searchParams]);
+
+  const handleClick = () => {
+    if (!searchParams) return;
+    const current = new URLSearchParams(searchParams);
+    current.set("example-param", "new-value");
+    const newUrl = `${pathname}?${current.toString()}`;
+    router.replace(newUrl, { scroll: false });
+  };
+
+  return (
+    <button onClick={handleClick}>
+      Current Param Value: {paramValue}
+    </button>
+  );
+};
+
+export default QueryParamButton;
+
+```
+
+### With the hook
+
+By using the `useSearchParam` hook, you can simplify the above code significantly:
+
+```tsx
+import { useEffect, useState } from "react";
+import { useSearchParam } from "@/src/app/functions/client/use-search-param"; // Assuming the custom hook is in this path
+
+const QueryParamButton: React.FC = () => {
+  const [paramValue, setParamValue] = useState<string | null>(null);
+  const { set, get } = useSearchParam();
+
+  useEffect(() => {
+    setParamValue(get("example-param"));
+  }, [get]);
+
+  const handleClick = () => {
+    set({ "example-param": "new-value" });
+  };
+
+  return (
+    <button onClick={handleClick}>
+      Current Param Value: {paramValue}
+    </button>
+  );
+};
+
+export default QueryParamButton;
+
+```
+
+## Benefits
+
+- **Simplifies Component Code**: By abstracting query parameter logic into a custom hook, your component code becomes cleaner and easier to read.
+- **Reusability**: The custom hook can be reused across different components, promoting DRY (Don't Repeat Yourself) principles.
+- **Maintainability**: Encapsulating query parameter logic in a single place makes it easier to maintain and update.

@@ -1,0 +1,55 @@
+---
+title: 'useCopyToClipboard'
+description: ''
+---
+## **Overview**
+
+The useCopyToClipboard hook is a custom React hook for copying text to the clipboard. It provides a simple way to trigger the copy action and track whether the text was recently copied.
+
+## **Usage**
+
+```jsx
+import { useCopyToClipboard } from '@/src/app/functions/client/use-copy-to-clipboard';
+
+function MyComponent() {
+  const { hasJustBeenCopied, copy } = useCopyToClipboard("Text to copy");
+
+  // ... rest of your component
+  );
+}
+```
+
+## **API**
+
+### Parameters
+
+- textToCopy: string - The text to copy
+- timeout?: number - The time in milliseconds hasJustBeenCopied stays true (default = 2000)
+
+## **Behavior**
+
+- Checks for clipboard support
+- Ensures there is text to copy
+- Writes text to the clipboard
+- Updates the state
+- Resets the state after a timeout
+
+## **Example: Copy Button**
+
+```jsx
+import { useCopyToClipboard } from '@/src/app/functions/client/use-copy-to-clipboard';
+
+function CopyButton() {
+  const { hasJustBeenCopied, copy } = useCopyToClipboard("Text to copy", 5000);
+
+  return (
+    <div>
+      <button onClick={copy}>
+        {hasJustBeenCopied ? "Copied!" : "Copy Text"}
+      </button>
+    </div>
+  );
+}
+```
+
+In this example, it shows for 5 seconds that it was Copied.

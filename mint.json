@@ -123,6 +123,24 @@
       "pages": [
         "functions/introduction"
       ]
+    },
+    {
+      "group": "Client",
+      "pages": [
+        "functions/client/cn"
+      ]
+    },
+    {
+      "group": "Hooks",
+      "pages": [
+        "functions/hooks/managing-user-status-for-content-blocks",
+        "functions/hooks/use-copy-to-clipboard",
+        "functions/hooks/use-debounce",
+        "functions/hooks/use-keyboard-shortcut",
+        "functions/hooks/use-search-param",
+        "functions/hooks/use-video-embed-url",
+        "functions/hooks/use-video-thumbnail"
+      ]
     }
   ],
   "footerSocials": {

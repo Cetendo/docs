@@ -1,0 +1,86 @@
+---
+title: 'Managing user status for content blocks'
+description: ''
+---
+## Frontend
+
+## **`updateUserStatusOptimistically`**
+
+This function updates the user status of a content block optimistically, updating the UI first before syncing the changes with the server.
+
+## **Usage**
+
+```jsx
+import { updateUserStatusOptimistically } from '@/src\app\[lang]\dashboard\course\[id]\learning-journey\functions\update-content-block-user-status';
+
+function MyComponent() {
+  const { updateUserStatus } = useOptimisticUserStatusUpdate(block.id);
+
+	updateUserStatus({ status: "IN_PROGRESS" });
+  // ... rest of your component
+  );
+}
+```
+
+### **API**
+
+### **Parameters**
+
+- `blockId`: `string` - The ID of the content block to update.
+- `data`: `ContentBlockUserStatusOfUser<T>` - The new user status data.
+- `options?`:
+    - `showProgressToast`: `boolean` - Whether to show a toast message upon progress.
+    - `showProgressToastWithConfetti`: `boolean` - Whether to show a confetti animation with the toast.
+
+### **Returns**
+
+- The result of the server action `updateContentBlockUserStatus`.
+
+### **Behavior**
+
+1. **Optimistic Update**: Immediately updates the user's status in the UI.
+2. **Server Sync**: Sends the update to the server to ensure persistence.
+3. **Progress Toast**: Optionally displays progress feedback to the user.
+
+## **`useOptimisticUserStatusUpdate`**
+
+This hook provides a reactive way to optimistically update a user's status on a content block, with error handling and toast notifications.
+
+**Usage**
+
+```jsx
+import { useOptimisticUserStatusUpdate } from '@/src\app\[lang]\dashboard\course\[id]\learning-journey\hooks\use-optimistic-user-status-update\use-optimistic-user-status-update';
+
+async function updateBlockStatus() {
+  try {
+    await updateUserStatusOptimistically(
+      "block-id-123", 
+      { status: "completed" }, 
+      { showProgressToast: true, showProgressToastWithConfetti: true }
+    );
+  } catch (error) {
+    console.error("Failed to update user status", error);
+  }
+}
+```
+
+### **API**
+
+### **Parameters**
+
+- `blockId`: `string` - The ID of the content block.
+- `options?`:
+    - `showCelebration`: `boolean` - Whether to show a toast or confetti animation when the update is successful.
+
+### **Returns**
+
+- `updateUserStatus`: `function` - The function to trigger the user status update.
+- `isPending`: `boolean` - Indicates if the update is in progress.
+- `isError`: `boolean` - Indicates if there was an error during the update.
+
+### **Behavior**
+
+1. **Optimistic Update**: Uses the `useOptimisticContentBlocks` state to immediately update the UI.
+2. **Server Sync**: Uses React Query's `useMutation` to sync the change with the server.
+3. **Error Handling**: Resets the UI to the server state if an error occurs, and shows a toast notification.
+4. **Celebration Option**: Optionally shows confetti or toast feedback upon successful update.

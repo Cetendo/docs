@@ -1,0 +1,79 @@
+---
+title: 'useVideoEmbedUrl'
+description: ''
+---
+## **Overview**
+
+The `useVideoEmbedUrl` hook is a custom React hook that converts video URLs from YouTube, Vimeo, or Loom into embeddable URLs. It processes the input URL and returns an `embedUrl` that can be used in an iframe or video player.
+
+## **Usage**
+
+```jsx
+import useVideoEmbedUrl from '@/src/app/functions/client/video/use-video-embed-url';
+
+function VideoEmbed({ videoUrl }) {
+  const { embedUrl } = useVideoEmbedUrl(videoUrl);
+
+  return (
+    <div>
+      {embedUrl ? (
+        <iframe
+          src={embedUrl}
+          title="Video Embed"
+          width="560"
+          height="315"
+          frameBorder="0"
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+        ></iframe>
+      ) : (
+        <p>Invalid video URL</p>
+      )}
+    </div>
+  );
+}
+
+```
+
+## **API**
+
+### Parameters
+
+- **url**: `string` - The video URL (YouTube, Vimeo, or Loom) to be processed.
+
+### Returns
+
+- **embedUrl**: `string | null` - The embeddable URL if a match is found, otherwise `null`.
+
+## **Behavior**
+
+- Matches YouTube, Vimeo, and Loom URLs using regular expressions.
+- Extracts the video ID and returns the corresponding embed URL.
+- Returns `null` if the URL doesn't match any supported video platforms.
+
+## **Example: Embedding a YouTube Video**
+
+```jsx
+import useVideoEmbedUrl from '@/src/app/functions/client/video/use-video-embed-url';
+
+function YouTubeVideo() {
+  const { embedUrl } = useVideoEmbedUrl('<https://www.youtube.com/watch?v=exampleID>');
+
+  return embedUrl ? (
+    <iframe
+      src={embedUrl}
+      title="YouTube Video"
+      width="560"
+      height="315"
+      frameBorder="0"
+      allow="autoplay; encrypted-media"
+      allowFullScreen
+    ></iframe>
+  ) : (
+    <p>Invalid YouTube URL</p>
+  );
+}
+
+```
+
+In this example, the hook converts a YouTube video URL into an embeddable iframe link.

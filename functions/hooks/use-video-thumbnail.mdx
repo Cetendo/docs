@@ -1,0 +1,69 @@
+---
+title: 'useVideoThumbnail'
+description: ''
+---
+## **Overview**
+
+The `useVideoThumbnail` hook is a custom React hook for fetching and displaying video thumbnails from YouTube or Vimeo based on the video URL. It allows you to specify the quality of the thumbnail and handles loading, errors, and fetching logic automatically.
+
+## **Usage**
+
+```jsx
+import { useVideoThumbnail } from '@/src/app/functions/client/video/use-video-thumbnail';
+
+function VideoThumbnail({ videoUrl }) {
+  const { thumbnailUrl, isError, isLoading } = useVideoThumbnail(videoUrl, "large");
+
+  return (
+    <div>
+      {isLoading && <p>Loading thumbnail...</p>}
+      {isError && <p>Failed to load thumbnail</p>}
+      {thumbnailUrl && <img src={thumbnailUrl} alt="Video Thumbnail" />}
+    </div>
+  );
+}
+
+```
+
+## **API**
+
+### Parameters
+
+- **url**: `string` - The video URL (YouTube or Vimeo) for which the thumbnail is to be fetched.
+- **quality?**: `"small" | "medium" | "large"` - Optional. The desired quality of the thumbnail (default is `"large"`).
+
+### Returns
+
+- **thumbnailUrl**: `string | null` - The URL of the fetched thumbnail, or `null` if unavailable.
+- **isError**: `boolean` - Whether there was an error fetching the thumbnail.
+- **isLoading**: `boolean` - Whether the thumbnail is currently being fetched.
+
+## **Behavior**
+
+- **Fetches thumbnail**: It matches the video URL (YouTube or Vimeo), retrieves the video ID, and constructs the thumbnail URL.
+- **Handles loading and error states**: Provides `isLoading` to indicate loading status and `isError` to indicate failures.
+- **Supports quality selection**: Allows you to choose from `"small"`, `"medium"`, or `"large"` thumbnail qualities.
+
+## **Example: Fetching YouTube Video Thumbnail**
+
+```jsx
+import { useVideoThumbnail } from '@/src/app/functions/client/video/use-video-thumbnail';
+
+function YouTubeThumbnail() {
+  const { thumbnailUrl, isError, isLoading } = useVideoThumbnail(
+    '<https://www.youtube.com/watch?v=exampleID>',
+    'medium'
+  );
+
+  return (
+    <div>
+      {isLoading && <p>Loading thumbnail...</p>}
+      {isError && <p>Error loading thumbnail</p>}
+      {thumbnailUrl && <img src={thumbnailUrl} alt="YouTube Thumbnail" />}
+    </div>
+  );
+}
+
+```
+
+In this example, the hook fetches a medium-quality thumbnail for a YouTube video and handles loading and error states.

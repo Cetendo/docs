@@ -1,0 +1,67 @@
+---
+title: 'useDebounce'
+description: ''
+---
+## **Overview**
+
+The `useDebounce` hook is a custom React hook for delaying the execution of an effect until after a specified delay has passed since the last time the effect was invoked. It helps manage expensive operations like API calls by preventing them from being triggered too frequently.
+
+## **Usage**
+
+```jsx
+import { useDebounce } from '@/src/app/functions/client/use-debounce';
+import { useState } from 'react';
+
+function MyComponent() {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  useDebounce(() => {
+    // Perform a search or other effect
+    console.log("Search Term:", searchTerm);
+  }, [searchTerm], 500);
+
+  // ... rest of your component
+}
+
+```
+
+## **API**
+
+### Parameters
+
+- **effect**: `() => any` - The effect to execute after the debounce delay.
+- **dependencies**: `any[]` - Dependencies that trigger the effect when they change.
+- **delay**: `number` - The debounce delay in milliseconds.
+
+## **Behavior**
+
+- Sets up a timeout to run the effect after the specified delay.
+- Clears the timeout if the dependencies change before the delay ends.
+- Ensures the effect is executed only after the delay and not too frequently.
+
+## **Example: Debounced Input**
+
+```jsx
+import { useDebounce } from '@/src/app/functions/client/use-debounce';
+import { useState } from 'react';
+
+function DebouncedInput() {
+  const [inputValue, setInputValue] = useState("");
+
+  useDebounce(() => {
+    console.log("Input Value:", inputValue);
+  }, [inputValue], 1000);
+
+  return (
+    <input
+      type="text"
+      value={inputValue}
+      onChange={(e) => setInputValue(e.target.value)}
+      placeholder="Type something..."
+    />
+  );
+}
+
+```
+
+In this example, the effect will only run if the `inputValue` hasn’t changed for 1 second.

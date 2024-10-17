@@ -1,0 +1,80 @@
+---
+title: 'useKeyboardShortcut'
+description: ''
+---
+## **Overview**
+
+The useKeyboardShortcut hook is a custom React hook for adding keyboard shortcuts to components. It offers a flexible way to define and manage keyboard events with various modifier key combinations.
+
+## **Usage**
+
+```jsx
+import { useKeyboardShortcut } from '@/src/app/functions/client/use-keyboard-shortcut';
+
+function MyComponent() {
+  useKeyboardShortcut('j', () => {
+    console.log('Shortcut triggered!');
+  }, { metaKey: true, enabled: true });
+
+  // ... rest of your component
+}
+```
+
+## **API**
+
+### Parameters
+
+- key: string - The main key to trigger the shortcut (e.g., 'a', 'Enter', 'Escape')
+- callback: () => void - The function to be executed when the shortcut is triggered
+- options: KeyboardShortcutOptions (optional) - An object with additional configuration options
+
+### Options
+
+The KeyboardShortcutOptions object can include:
+
+- metaKey?: boolean - Requires the Meta key (Command on Mac, Windows key on Windows)
+- ctrlKey?: boolean - Requires the Control key
+- altKey?: boolean - Requires the Alt key
+- shiftKey?: boolean - Requires the Shift key
+- enabled?: boolean - If false, the shortcut will be disabled
+
+## **Behavior**
+
+- Uses useEffect to add and remove the event listener
+- Prevents default behavior of the key press when triggered
+- Active only when specified key and modifier keys (if any) are pressed simultaneously
+- Inactive if enabled is set to false in options
+
+## **Example: Toggle Popover**
+
+```jsx
+import { useState } from 'react';
+import { useKeyboardShortcut } from '@/src/app/functions/client/use-keyboard-shortcut';
+
+function PopoverComponent() {
+  const [isOpen, setIsOpen] = useState(false);
+  
+  useKeyboardShortcut('j', () => setIsOpen(!isOpen), {
+    metaKey: true,
+    enabled: true
+  });
+
+  return (
+    <div>
+      <button onClick={() => setIsOpen(!isOpen)}>Toggle Popover</button>
+      {isOpen && <div>Popover Content</div>}
+    </div>
+  );
+}
+```
+
+In this example, pressing Cmd+J (on Mac) or Win+J (on Windows) toggles the popover's visibility.
+
+## **Best Practices**
+
+- Use meaningful, easy-to-remember key combinations that don't conflict with browser or system shortcuts
+- Provide visual cues or documentation for available shortcuts
+- Use the enabled option to conditionally activate shortcuts based on component state or user preferences
+- Consider accessibility, ensuring shortcuts don't interfere with assistive technologies
+
+By using the useKeyboardShortcut hook, you can enhance the user experience of your React applications by providing quick keyboard access to various features and actions.
