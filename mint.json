@@ -29,23 +29,17 @@
     {
       "name": "Components",
       "url": "components"
+    },
+    {
+      "name": "Functions",
+      "url": "functions"
     }
   ],
   "anchors": [
     {
-      "name": "Documentation",
+      "name": "Our Notion Page",
       "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
-    },
-    {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "url": "https://www.notion.so/ticketstatus/bc8466d7c105430d8054f71ef10431ed?v=60e6b4e86ca1430e8c1d3ed69420d651"
     }
   ],
   "navigation": [
@@ -53,8 +47,7 @@
       "group": "Get Started",
       "pages": [
         "introduction",
-        "quickstart",
-        "development"
+        "quickstart"
       ]
     },
     {
@@ -123,6 +116,12 @@
         "components/generic/router-back-button",
         "components/generic/skeleton",
         "components/generic/stacked-progress-bar"
+      ]
+    },
+    {
+      "group": "Functions Documentation",
+      "pages": [
+        "functions/introduction"
       ]
     }
   ],
