@@ -51,6 +51,13 @@
       ]
     },
     {
+      "group": "Ticket System",
+      "pages": [
+        "ticket-system/ticket-status",
+        "ticket-system/our-priority-system"
+      ]
+    },
+    {
       "group": "Git Guidelines",
       "pages": [
         "git-guidelines/create-a-branch",
