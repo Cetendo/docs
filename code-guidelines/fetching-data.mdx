@@ -5,11 +5,11 @@ description: ''
 
 ## On the Client Side
 
-In our frontend, we use **React Query** as our standardized way to fetch data. This approach ensures consistency and leverages React Query’s features like caching, retries, and background refetching to keep data up-to-date efficiently.
+In our frontend, **React Query** is our chosen tool for fetching data. It handles caching, retries, and background refetching, ensuring efficient data management across our application. Below are some simplified examples, including error handling within components.
 
 ### Basic Usage of `useQuery`
 
-Our data-fetching pattern with React Query usually follows this structure:
+A typical data-fetching pattern with React Query follows this structure:
 
 ```javascript
 const { data, isLoading, isError } = useQuery({
@@ -18,51 +18,75 @@ const { data, isLoading, isError } = useQuery({
 });
 ```
 
-Here are some common examples for fetching "user-course" data:
+The `queryKey` uniquely identifies each query, and `queryFn` is the function responsible for fetching data. You can also handle loading and error states to display appropriate messages or actions in the UI.
 
 ---
 
 ### Examples
 
-#### 1. Fetching User Data Fields
-
-```javascript
-const { data } = useQuery({
-  queryKey: ["user-course-fields"],
-  queryFn: getUserCourseFields,
-});
-```
-
-This query fetches essential fields for the user-course data using the `getUserCourseFields` function, which retrieves information needed for initial display.
-
-#### 2. Fetching Course Status and Subscription Data
+#### 1. Fetching User Course Data with Basic Error Handling
 
 ```javascript
 const { data, isLoading, isError } = useQuery({
-  queryKey: ["course-status-subscription"],
-  queryFn: () => getCourseStatusAndSubscription(),
+  queryKey: ["user-course-data"],
+  queryFn: getUserCourseData,
 });
 ```
 
-This query provides both loading and error states while fetching course status and subscription data. This is useful when different states (like `isLoading` and `isError`) are needed for conditional UI rendering.
+This query fetches essential user course data and handles both loading and error states. The `isLoading` and `isError` flags allow for conditional UI rendering based on data-fetching status.
 
-#### 3. Fetching Course Layers
+---
+
+### 2. Fetching Course Layers in a Component with Error Handling
+
+Below is an example of using `useQuery` within a React component, including error handling to display a user-friendly message if the data fails to load.
 
 ```javascript
-const { data: courseLayers } = useQuery({
-  queryKey: ["course-layers"],
-  queryFn: getCourseLayers,
-});
+import React from "react";
+import { useQuery } from "react-query";
+
+const CourseLayers = () => {
+  const { data: courseLayers, isLoading, isError, error } = useQuery({
+    queryKey: ["course-layers"],
+    queryFn: getCourseLayers,
+  });
+
+  if (isLoading) return <p>Loading course layers...</p>;
+
+  if (isError) {
+    return (
+      <div>
+        <p>Error loading course layers: {error.message}</p>
+        <button onClick={() => refetch()}>Retry</button>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <h2>Course Layers</h2>
+      <ul>
+        {courseLayers.map((layer) => (
+          <li key={layer.id}>{layer.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default CourseLayers;
 ```
 
-Here, we fetch additional "layers" of the course (for instance, related course sections or modules) using `getCourseLayers`. We assign the result to `courseLayers` for easy reference.
+In this example:
+- **Loading State**: Displays "Loading course layers..." while data is being fetched.
+- **Error State**: If there's an error, it displays an error message along with a "Retry" button. The `refetch()` function can be called to retry fetching the data.
 
 ---
 
 ### Key Points
 
-- **React Query**: This is our standard approach to data fetching on the frontend.
-- **queryKey**: Unique identifier for caching each specific data request.
-- **queryFn**: The function responsible for the API call.
+- **Error Handling**: React Query provides the `isError` flag and the error object to easily handle errors.
+- **Refetching**: Use `refetch()` to manually reattempt data fetching, especially useful in case of errors.
+- **Standardized Data Fetching**: Using React Query ensures a consistent, efficient approach to data management.
 
-For more in-depth usage and additional configuration options, see the [React Query documentation](https://tanstack.com/query/latest/docs/framework/react/guides/query-functions).
+For further customization options, refer to the [React Query documentation](https://tanstack.com/query/latest/docs/framework/react/guides/query-functions). This documentation provides more details on handling data states, retries, and caching.
