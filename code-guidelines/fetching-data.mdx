@@ -1,130 +1,68 @@
 ---
-title: 'Fetching Data'
-description: ''
+title: 'Fetching Data'  
+description: ''  
 ---
-## On the client side
 
-In our frontend, we use **React Query** as our standardized approach to fetch data. React Query helps us manage server state and improves data fetching and caching performance, which allows for efficient, smooth, and flexible interactions with our API.
+## On the Client Side
 
-### Why React Query?
+In our frontend, we use **React Query** as our standardized way to fetch data. This approach ensures consistency and leverages React Query’s features like caching, retries, and background refetching to keep data up-to-date efficiently.
 
-React Query offers robust features for data fetching, such as caching, automatic retries, and background updates, making it an ideal tool for handling asynchronous data. We have standardized this approach to streamline data handling across the application and ensure consistency in how we interact with APIs.
+### Basic Usage of `useQuery`
 
-### Basic Structure of `useQuery`
-
-When using React Query, we typically follow this structure:
+Our data-fetching pattern with React Query usually follows this structure:
 
 ```javascript
-const { data, isLoading, error } = useQuery({
+const { data, isLoading, isError } = useQuery({
   queryKey: ["unique-query-key"],
-  queryFn: fetchFunction,  // This function defines the API call
+  queryFn: fetchFunction,  // Function to perform the API call
 });
 ```
 
-- `queryKey` – A unique identifier for the query. React Query uses this key to manage caching.
-- `queryFn` – The function that performs the data-fetching logic. This is where we define API calls.
-
-Here are some examples of how we use `useQuery` to fetch different types of data:
+Here are some common examples for fetching "user-course" data:
 
 ---
 
 ### Examples
 
-#### 1. Fetching Filter Layer Options
+#### 1. Fetching User Data Fields
 
 ```javascript
-const {
-  data: options = [],
-  isLoading,
-  isFetching,
-  isRefetching,
-  error,
-  refetch,
-} = useQuery({
-  queryKey: ["filter-layers-courses"],
-  queryFn: props.fetchOptions,
-  retry: 2,  // Will retry the fetch function up to two times on failure
+const { data } = useQuery({
+  queryKey: ["user-course-fields"],
+  queryFn: getUserCourseFields,
 });
 ```
 
-In this example, we fetch filter layer options with a `queryKey` of `["filter-layers-courses"]`. We use `retry: 2` to automatically retry failed requests up to two times.
+This query fetches essential fields for the user-course data using the `getUserCourseFields` function, which retrieves information needed for initial display.
 
-#### 2. Fetching Custom Filters with No Retries
+#### 2. Fetching Course Status and Subscription Data
 
 ```javascript
-const {
-  data: fetchedCustomFilters = [],
-  isLoading,
-  isFetching,
-  isRefetching,
-  error,
-  refetch,
-} = useQuery({
-  queryKey: ["custom-filters"],
-  queryFn: fetchCustomFilters,
-  retry: 0,  // No retries for this query
+const { data, isLoading, isError } = useQuery({
+  queryKey: ["course-status-subscription"],
+  queryFn: () => getCourseStatusAndSubscription(),
 });
 ```
 
-Here, we disable retries (`retry: 0`) as this data does not require retry logic. This `useQuery` hook fetches custom filters and provides various loading and error states.
+This query provides both loading and error states while fetching course status and subscription data. This is useful when different states (like `isLoading` and `isError`) are needed for conditional UI rendering.
 
-#### 3. Fetching User Data by ID
+#### 3. Fetching Course Layers
 
 ```javascript
-const { data, isLoading } = useQuery({
-  queryFn: () => getUserById(row.original.data?.peerUserId!),
-  queryKey: ["getUserById", row.original.data?.peerUserId!],
+const { data: courseLayers } = useQuery({
+  queryKey: ["course-layers"],
+  queryFn: getCourseLayers,
 });
 ```
 
-This example uses a dynamic `queryKey` with a unique identifier for each user (`peerUserId`). This approach is useful for fetching data based on dynamic values like user IDs.
-
-#### 4. Fetching Images from Unsplash API
-
-```javascript
-const { data: images = [], isLoading } = useQuery({
-  queryKey: ["unsplash-images", searchQuery],
-  queryFn: () => getUnsplashImages(searchQuery),
-});
-```
-
-We use `searchQuery` as part of the `queryKey` to cache results specifically for each search term. The `queryFn` calls the Unsplash API to fetch images based on the current search query.
-
-#### 5. Fetching User Grade Data for a Block
-
-```javascript
-const {
-  data: gradeData,
-  isLoading,
-  error,
-} = useQuery({
-  queryKey: ["blockUserGrade", { blockId: block.id }],
-  queryFn: () => getBlockUserGrade(block.id),
-});
-```
-
-Here, we fetch grade data for a specific block using a unique `blockId`. This helps keep cache entries separate for each block's data.
-
-#### 6. Fetching User Status for a Content Block
-
-```javascript
-const { data: userStatus, isLoading } = useQuery({
-  queryKey: ["content-block-all-users-status", blockId],
-  queryFn: async () => {
-    const data = await getContentBlockAllUsersStatusWithData(blockId, returnUserObject);
-    return data;
-  },
-});
-```
-
-This example uses an asynchronous function in the `queryFn` to fetch user statuses. It’s helpful when needing more complex logic in the API call, such as passing multiple parameters.
+Here, we fetch additional "layers" of the course (for instance, related course sections or modules) using `getCourseLayers`. We assign the result to `courseLayers` for easy reference.
 
 ---
 
 ### Key Points
 
-- **Standardized Approach**: React Query is our chosen method for data fetching on the frontend, and we follow this approach consistently across our application.
-- **Caching and Performance**: React Query helps in managing caching, which improves performance by avoiding unnecessary API calls.
-- **Error Handling and Retry Logic**: React Query provides built-in options to handle errors and retries, allowing for better control over network requests.
+- **React Query**: This is our standard approach to data fetching on the frontend.
+- **queryKey**: Unique identifier for caching each specific data request.
+- **queryFn**: The function responsible for the API call.
 
-For more details on using React Query, refer to the official [React Query documentation](https://tanstack.com/query/latest/docs/framework/react/guides/query-functions). This documentation explains additional options and best practices for efficient data fetching in React.
+For more in-depth usage and additional configuration options, see the [React Query documentation](https://tanstack.com/query/latest/docs/framework/react/guides/query-functions).
