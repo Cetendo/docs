@@ -76,7 +76,8 @@
         "code-guidelines/clean-components",
         "code-guidelines/logging",
         "code-guidelines/fetching-data",
-        "code-guidelines/using-server-only-and-client-only"
+        "code-guidelines/using-server-only-and-client-only",
+        "code-guidelines/performance"
         
       ]
     },

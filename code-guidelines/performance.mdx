@@ -1,0 +1,107 @@
+---
+title: 'Performance'  
+description: ''  
+---
+
+# Memoization in React: Optimizing Performance
+
+React provides three powerful tools for optimizing component performance by preventing unnecessary re-renders: `useMemo`, `memo`, and `useCallback`. Here's an overview of each:
+
+## 1. useMemo Hook
+
+`useMemo` memoizes the result of a computation, recomputing it only when its dependencies change. This is particularly useful for expensive calculations that don't need to run on every render.
+
+### Advantages:
+
+- **Performance Optimization:** By caching the result of a computation, `useMemo` avoids redundant calculations, enhancing performance.
+
+### Usage Example:
+
+```jsx
+import { useMemo } from 'react';
+
+function Component({ items }) {
+  const processedItems = useMemo(() => {
+    // Expensive computation
+    return items.map(item => /* processing */);
+  }, [items]);
+
+  return (
+    <div>
+      {/* render processedItems */}
+    </div>
+  );
+}
+```
+
+## 2. memo Higher-Order Component
+
+`memo` is a higher-order component that memoizes a functional component, preventing it from re-rendering unless its props change.
+
+### Advantages:
+
+- **Avoid Unnecessary Re-renders:** By comparing current and previous props, `memo` ensures that a component re-renders only when necessary, improving performance.
+
+### Usage Example:
+
+```jsx
+import React, { memo } from 'react';
+
+const MyComponent = memo(function MyComponent(props) {
+  // Component implementation
+});
+```
+
+## 3. useCallback Hook
+
+`useCallback` memoizes a function, ensuring that its reference remains stable between renders unless its dependencies change. This is beneficial when passing callbacks to child components that rely on reference equality to prevent unnecessary re-renders.
+
+### Advantages:
+
+- **Stable Function References:** Maintains the same function reference between renders, which is crucial when passing callbacks to optimized child components.
+
+### Usage Example:
+
+```jsx
+import { useCallback } from 'react';
+
+function ParentComponent() {
+  const handleClick = useCallback(() => {
+    // Handle click
+  }, []);
+
+  return <ChildComponent onClick={handleClick} />;
+}
+```
+
+## When to Use Them
+
+- **useMemo:** Use when you have expensive computations that should not re-run unless specific dependencies change.
+- **memo:** Wrap functional components that receive props and do not need to re-render unless those props change.
+- **useCallback:** Use when passing functions to child components that rely on reference equality to prevent re-renders.
+
+By appropriately using these tools, you can enhance the performance of your React applications by minimizing unnecessary re-renders and computations.rs and computations.
+
+---
+
+### Code-Splitting in Next.js
+
+Next.js automatically does **code-splitting** based on pages, loading only the JavaScript needed for the current page. You can further optimize with **dynamic imports** to split specific components.
+
+### Example:
+
+```jsx
+jsx
+Copy code
+import dynamic from 'next/dynamic';
+
+// Dynamically import a component with code-splitting
+const HeavyComponent = dynamic(() => import('../components/HeavyComponent'), {
+  ssr: false, // optional, disable server-side rendering for this component
+});
+
+export default function Page() {
+  return <HeavyComponent />;
+}
+
+```
