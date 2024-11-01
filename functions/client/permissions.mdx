@@ -1,0 +1,77 @@
+---
+title: 'Permissions'  
+description: 'Documentation for the hasPermissions function, used to check user permissions.'  
+---
+
+## Permissions Check Utility
+
+The `hasPermissions` function provides a standardized way to check if a user has the necessary permissions to perform certain actions within the application. It’s especially useful for managing access control based on roles, permissions, and specific layer identifiers.
+
+### Function Definition
+
+```typescript
+import useUser from "@/src/app/providers/user-provider/zustand";
+import type { Permission } from "@/src/app/types/roles";
+
+export function hasPermissions(
+  requiredPermissions: Permission[],
+  layerIds?: string | string[],
+  needsAllPermissions = false,
+) { ... }
+```
+
+### Parameters
+
+- **`requiredPermissions`** (`Permission[]`): An array of permissions that the user must have to proceed. This parameter is required and forms the basis of the permission check.
+  
+- **`layerIds`** (`string | string[]`, optional): Specifies the layers that the user’s roles should correspond to when performing the permission check. If not provided, the check is applied across all layers.
+
+- **`needsAllPermissions`** (`boolean`, default `false`): A flag indicating whether the user must have *all* of the required permissions (`true`) or at least *one* of the permissions (`false`).
+
+### How It Works
+
+1. **Superadmin Check**: If the user is a superadmin, the function automatically returns `true`, granting access.
+   
+2. **Permission Requirements**:
+   - If **`needsAllPermissions`** is `true`, the function checks if the user has every permission listed in `requiredPermissions`.
+   - If `needsAllPermissions` is `false`, it only checks if the user has at least one of the `requiredPermissions`.
+   
+3. **Layer Filtering**: When `layerIds` is provided, the function limits the check to roles that match the given `layerIds`. This ensures permissions are evaluated within specified layers only.
+
+### Return Value
+
+- Returns **`true`** if the user meets the specified permissions and layer requirements.
+- Returns **`false`** if the user lacks the necessary permissions or if conditions are not met.
+
+### Usage Examples
+
+#### Basic Permission Check
+
+To check if the user has any of the `["READ", "WRITE"]` permissions:
+
+```typescript
+const hasReadOrWriteAccess = hasPermissions(["READ", "WRITE"]);
+```
+
+#### All Permissions Check
+
+To check if the user has both `["READ", "WRITE"]` permissions across all layers:
+
+```typescript
+const hasFullAccess = hasPermissions(["READ", "WRITE"], undefined, true);
+```
+
+#### Layer-Specific Permissions Check
+
+To check if the user has the `["READ"]` permission within specific layers `["layer1", "layer2"]`:
+
+```typescript
+const hasLayerSpecificReadAccess = hasPermissions(["READ"], ["layer1", "layer2"]);
+```
+
+### Notes
+- **Superadmin Access**: Users with the `isSuperadmin` flag are granted automatic access, bypassing permission checks.
+- **Layer Filtering**: If `layerIds` are provided, only roles matching these layers are considered.
+- **Performance**: This function leverages efficient array methods to quickly evaluate permissions, ensuring minimal performance impact.
+
+This utility simplifies permission management by allowing developers to configure access checks flexibly across various roles and layers.

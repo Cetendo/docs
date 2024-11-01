@@ -136,7 +136,8 @@
     {
       "group": "Client",
       "pages": [
-        "functions/client/cn"
+        "functions/client/cn",
+        "functions/client/permissions"
       ]
     },
     {
