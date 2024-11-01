@@ -136,8 +136,21 @@
     {
       "group": "Client",
       "pages": [
-        "functions/client/cn",
-        "functions/client/permissions"
+        "functions/client/permissions",
+        "functions/client/get-user-by-id"
+      ]
+    },
+    {
+      "group": "Server",
+      "pages": [
+        "functions/server/encryption",
+        "functions/server/get-user-auth-or-throw"
+      ]
+    },
+    {
+      "group": "Client & Server ",
+      "pages": [
+        "functions/client-and-server/cn"
       ]
     },
     {
