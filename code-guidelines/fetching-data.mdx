@@ -90,3 +90,90 @@ In this example:
 - **Standardized Data Fetching**: Using React Query ensures a consistent, efficient approach to data management.
 
 For further customization options, refer to the [React Query documentation](https://tanstack.com/query/latest/docs/framework/react/guides/query-functions). This documentation provides more details on handling data states, retries, and caching.
+
+## Creating Reusable Hooks for Fetching
+
+Sometimes, you have a fetch that occurs frequently throughout the software. In such cases, creating a reusable hook simplifies your code by reducing repetition, ensuring consistent query behavior, and making it easy to maintain. By centralizing common fetch logic in a custom hook, you can adjust configurations (like retries or caching) in one place.
+
+### Example: A Reusable Hook for Fetching Data
+
+Let’s create a reusable hook for data fetching using `useQuery`, handling dynamic `queryKey` suffixes and fetch functions.
+
+#### Step 1: Define the Reusable Hook
+
+Here’s an example of a custom hook, `useFetchData`, which uses React Query to fetch data with customizable query keys and a fetching function:
+
+```javascript
+import { useQuery } from 'react-query';
+
+// Define the custom hook
+const useFetchData = (queryKeySuffix, fetchData, enabled = true) => {
+  return useQuery({
+    queryKey: [...queryKeySuffix],
+    queryFn: fetchData,
+    retry: 1,
+    enabled,
+  });
+};
+
+export default useFetchData;
+```
+
+**Explanation**:
+- **`queryKeySuffix`**: This parameter accepts the specific suffix for the query key (e.g., `"items"`, `"tags"`), allowing for unique cache keys for each type of data.
+- **`fetchData`**: This is the function responsible for fetching data from the server.
+- **`enabled`**: An optional parameter for conditional fetching (defaults to `true`), which is useful for situations where you only want to fetch data based on a certain condition.
+
+#### Step 2: Use the Custom Hook in Components
+
+Now, you can use `useFetchData` in components, eliminating repeated `useQuery` setup:
+
+```javascript
+import useFetchData from './hooks/useFetchData';
+
+const MyComponent = (props) => {
+  // Fetch items
+  const {
+    data: items = [],
+    isLoading: isLoadingFetchingItems,
+    isError: isErrorFetchingItems,
+    error: itemsFetchError,
+  } = useFetchData([...props.queryKeys, "items"], props.fetchData, open);
+
+  // Fetch tags
+  const {
+    data: fetchedTags = [],
+    isLoading: isLoadingFetchingTags,
+    isError: isErrorFetchingTags,
+  } = useFetchData([...props.queryKeys, "tags"], props.fetchData, open);
+
+  // Render the component
+  return (
+    <div>
+      <h2>Items and Tags</h2>
+      {isLoadingFetchingItems && <p>Loading items...</p>}
+      {isErrorFetchingItems && <p>Error fetching items: {itemsFetchError.message}</p>}
+      <ul>
+        {items.map((item) => (
+          <li key={item.id}>{item.name}</li>
+        ))}
+      </ul>
+
+      {isLoadingFetchingTags && <p>Loading tags...</p>}
+      <ul>
+        {fetchedTags.map((tag) => (
+          <li key={tag.id}>{tag.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+```
+
+### Benefits of Using a Reusable Hook
+
+1. **Consistency**: By centralizing the fetch configuration, you ensure that each call has consistent behavior (e.g., retry settings).
+2. **Efficiency**: You reduce code duplication by reusing the same hook for similar fetch logic.
+3. **Maintainability**: Any updates to fetch logic or configurations are handled in one place, making changes easier and reducing errors across the app.
+
+For further customization options and query configurations, refer to the [React Query documentation](https://tanstack.com/query/latest/docs/framework/react/guides/query-functions).
